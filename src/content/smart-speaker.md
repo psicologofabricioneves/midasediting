@@ -1,7 +1,7 @@
 ---
-title: "Harmony Smart Speaker"
+title: "Music Documentary"
 slug: "smart-speaker"
-client: "Harmony Audio"
+client: "Tyler the Creator"
 category: "Product Design"
 services: "Industrial Design, Prototyping, Design for Manufacturing"
 year: "2024"

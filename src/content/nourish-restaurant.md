@@ -1,7 +1,7 @@
 ---
-title: "Nourish Restaurant"
+title: "Gaming Content"
 slug: "nourish-restaurant"
-client: "Nourish Restaurant Group"
+client: "House of the Locust"
 category: "Art Direction"
 services: "Art Direction, Digital Campaign, Brand Activation"
 year: "2025"

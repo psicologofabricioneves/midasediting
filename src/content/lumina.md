@@ -1,7 +1,7 @@
 ---
-title: "Lumina E-commerce"
+title: "IRL Roundtable"
 slug: "lumina"
-client: "Lumina"
+client: "Find the Anime Hater"
 category: "Web Design"
 services: "Web Design, CMS Integration, Performance Optimization"
 year: "2024"

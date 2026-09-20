@@ -7,45 +7,97 @@ import Link from "../elements/Link.astro";
 
 // links
 const socials = [
-    { title: "Linkedin", href: "#!" },
-    { title: "Instagram", href: "#!" },
-    { title: "Twiter", href: "#!" },
-    { title: "Github", href: "#!" }
+    {
+        title: "Twitter",
+        href: "https://x.com/midasediting"
+    },
+    {
+        title: "Discord @angu8731",
+        href: "https://discord.gg/RkU4UcTZZ"
+    },
+    {
+        title: "Telegram",
+        href: "https://t.me/algozcrosss"
+    },
+    {
+        title: "Email",
+        href: "mailto:psique.fabricio@gmail.com"
+    }
 ];
 
 const navigation = [
     { title: "Home", href: "/" },
-    { title: "Works", href: "/works" },
-    { title: "About", href: "/about" },
     { title: "Contact", href: "/contact" }
-]
+];
 ---
 
 <Container variant={'xl'} class="mt-32 pb-8">
+
     <div class="flex flex-col gap-10 md:flex-row">
+
         <div class="flex-1 md:text-left text-center">
-            <Heading tagName="h3" tagSize="h4" class="text-base-900 mb-5">Socials</Heading>
+
+            <Heading
+                tagName="h3"
+                tagSize="h4"
+                class="text-base-900 mb-5"
+            >
+                Socials
+            </Heading>
+
             <ul>
                 {
                     socials.map((social) => (
-                        <li><Link variant={'nav'} href={social.href}>{social.title}</Link></li>
+                        <li>
+                            <Link
+                                variant={'nav'}
+                                href={social.href}
+                                target="_blank"
+                            >
+                                {social.title}
+                            </Link>
+                        </li>
                     ))
                 }
             </ul>
+
         </div>
+
         <div class="flex-1 md:text-right text-center">
-            <Heading tagName="h3" tagSize="h4" class="text-base-900 mb-5">Navigation</Heading>
+
+            <Heading
+                tagName="h3"
+                tagSize="h4"
+                class="text-base-900 mb-5"
+            >
+                Navigation
+            </Heading>
+
             <ul>
                 {
                     navigation.map((navLink) => (
-                        <li><Link variant={'nav'} href={navLink.href}>{navLink.title}</Link></li>
+                        <li>
+                            <Link
+                                variant={'nav'}
+                                href={navLink.href}
+                            >
+                                {navLink.title}
+                            </Link>
+                        </li>
                     ))
                 }
             </ul>
+
         </div>
+
     </div>
+
     <div class="flex flex-col text-center">
-        <Text variant={'sm'} class="text-base-900">Peter Jones © 2025 All Rights Reserved</Text>
-        <Text variant={'sm'} class="text-base-900">Built with <Link variant={'inline'} target="_blank" href="https://astro.build">Astro</Link> by <Link variant={'inline'} target="_blank" href="https://github.com/jessgaspardev">Jess Gaspar</Link> &bull; Distributed by <Link variant={'inline'} target="_blank" href="https://themewagon.com">ThemeWagon</Link></Text>
+
+        <Text variant={'sm'} class="text-base-900">
+            Midas Editing © 2026 All Rights Reserved
+        </Text>
+        
     </div>
+
 </Container>

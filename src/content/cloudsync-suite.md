@@ -1,7 +1,7 @@
 ---
-title: "Cloudsync Suite"
+title: "Talking Head"
 slug: "cloudsync-suite"
-client: "Cloudsync Technologies"
+client: "Codex"
 category: "UI/UX Design"
 services: "User Research, Interface Design, Design System Development"
 year: "2025"

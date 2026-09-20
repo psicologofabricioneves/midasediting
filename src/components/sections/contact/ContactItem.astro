@@ -1,5 +1,5 @@
 ---
-//assets
+// assets
 import { Image } from "astro:assets";
 import symbol from "../../../assets/ui/symbolWhite.svg";
 
@@ -7,16 +7,23 @@ import symbol from "../../../assets/ui/symbolWhite.svg";
 import Text from "../../elements/Text.astro";
 
 // props
-const { title, contact } = Astro.props;
+const { title, contact, href } = Astro.props;
 ---
 
-<div class="border-2 border-base-900 p-4 flex flex-col gap-4 w-full">
+<a
+    href={href}
+    target={href?.startsWith("http") ? "_blank" : undefined}
+    rel={href?.startsWith("http") ? "noopener noreferrer" : undefined}
+    class="border-2 border-base-900 p-4 flex flex-col gap-4 w-full cursor-pointer transition-transform duration-200 hover:-translate-y-1"
+>
     <div class="flex justify-between">
         <Text variant={'lg'}>{title}</Text>
         <Image src={symbol} alt="UI Symbol" />
     </div>
+
     <div class="h-px w-full border border-base-900"></div>
+
     <div>
         <Text variant={'sm'}>{contact}</Text>
     </div>
-</div>
+</a>

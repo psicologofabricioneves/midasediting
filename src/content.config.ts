@@ -3,7 +3,10 @@ import { defineCollection } from 'astro:content';
 import { z } from 'astro/zod'
 
 const works = defineCollection({
-    loader: glob({pattern: "src/content/**/*.md"}),
+loader: glob({
+    base: "./src/content",
+    pattern: "**/*.md"
+}),
     schema: ({image}) => z.object({
         title: z.string().max(50),
         slug: z.string(),

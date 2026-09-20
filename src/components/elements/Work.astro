@@ -1,34 +1,120 @@
 ---
-// assets
-import { Image } from "astro:assets";
-import symbol from "../../assets/ui/symbol.svg";
-import vinylT from "../../assets/work-card/vinyltexture.jpg";
-import vinylD from "../../assets/work-card/vinyldisk.png";
-import { getImage } from "astro:assets";
-const vinylTexture = await getImage({src: vinylT, format:"jpg"})
-const vinylDisk = await getImage({src: vinylD, format:"png"})
-
-// components
 import Text from "../elements/Text.astro";
 import Heading from "../elements/Heading.astro";
 
-// props
-const { slug, featuredImage, title, client, category } = Astro.props;
+const { slug, title, client } = Astro.props;
+
+const videos = {
+  "cloudsync-suite": "/videos/video1.mp4",
+  "lumina": "/videos/video2.mp4",
+  "nourish-restaurant": "/videos/video33.mp4",
+  "smart-speaker": "/videos/video4.mp4",
+};
+
+const videoSrc = videos[slug];
 ---
 
-<div class="group lg:m-auto">
-    <a href=`/works/${slug}`>
-        <div class="relative xl:w-[350px] xl:h-[350px] lg:w-[300px] lg:h-[300px] md:w-[400px] md:h-[400px] sm:w-[250px] sm:h-[250px] w-[200px] h-[200px] overflow-visible mb-4">
-            <div class="absolute top-2 left-2 z-40 bg-base-900 border-2 border-base-100 px-4 flex gap-2">
-                <Text variant={'lg'} class="text-base-100">{category}</Text>
-                <Image src={symbol} alt="UI Symbol" width={30} loading="lazy"/>
-            </div>
-            <div style=`background-image: url(${vinylTexture.src})` class="absolute inset-0 bg-cover opacity-40 z-30"></div>
-            <Image src={featuredImage} alt={title} class="relative w-full h-full object-cover z-20" loading="lazy" width={400}/>
-            <div style=`background-image: url(${vinylDisk.src})` class="absolute top-0 -right-12 bg-cover z-0 xl:w-[350px] xl:h-[350px] lg:w-[300px] lg:h-[300px] md:w-[400px] md:h-[400px] sm:w-[250px] sm:h-[250px] w-[200px] h-[200px] transition-all duration-500 ease-in-out group-hover:-right-24 animate-spin"></div>
-        </div>
-        <Heading tagName="h3" tagSize="h4" class="group-hover:underline">{title}</Heading>
-        <Text variant={'md'}>{client}</Text>
-    </a>
+<div class="work-card w-full" data-video={videoSrc}>
+  <div class="relative w-full aspect-video overflow-hidden group cursor-pointer">
+    <video
+      src={videoSrc}
+      muted
+      playsinline
+      preload="metadata"
+      class="preview-video w-full h-full object-cover cursor-pointer"
+    ></video>
+
+    <button
+      type="button"
+      class="play-button absolute inset-0 flex items-center justify-center cursor-pointer group/play outline-none focus:outline-none focus:ring-0"
+      aria-label={`Play ${title}`}
+    >
+      <span class="flex items-center justify-center w-24 h-24 rounded-full bg-black/60 border-2 border-white backdrop-blur-sm transition-all duration-300 group-hover/play:scale-110 group-hover/play:bg-black/80">
+        <svg
+          viewBox="0 0 24 24"
+          class="w-10 h-10 fill-white translate-x-[2px]"
+          aria-hidden="true"
+        >
+          <path d="M8 5v14l11-7z" />
+        </svg>
+      </span>
+    </button>
+  </div>
+
+  <Heading tagName="h3" tagSize="h4">{title}</Heading>
+  <Text variant={"md"}>{client}</Text>
 </div>
 
+<div
+  id="video-modal"
+  class="fixed inset-0 bg-black/90 z-50 hidden items-center justify-center p-6"
+>
+  <button
+    id="close-video-modal"
+    type="button"
+    class="absolute top-6 right-6 text-white text-3xl cursor-pointer outline-none focus:outline-none focus:ring-0"
+    aria-label="Close video"
+  >
+    ✕
+  </button>
+
+  <video
+    id="modal-video"
+    controls
+    playsinline
+    class="max-w-5xl w-full max-h-[85vh]"
+  ></video>
+</div>
+
+<script>
+  const cards = document.querySelectorAll(".work-card");
+  const modal = document.getElementById("video-modal");
+  const modalVideo = document.getElementById("modal-video");
+  const closeModal = document.getElementById("close-video-modal");
+
+  cards.forEach((card) => {
+    const preview = card.querySelector(".preview-video");
+    const button = card.querySelector(".play-button");
+    const src = card.dataset.video;
+
+    card.addEventListener("mouseenter", () => {
+      preview.play();
+    });
+
+    card.addEventListener("mouseleave", () => {
+      preview.pause();
+      preview.currentTime = 0;
+    });
+
+    button.addEventListener("click", () => {
+      preview.pause();
+      preview.currentTime = 0;
+
+      modalVideo.src = src;
+      modalVideo.currentTime = 0;
+
+      modal.classList.remove("hidden");
+      modal.classList.add("flex");
+
+      modalVideo.play();
+    });
+  });
+
+  function closePlayer() {
+    modalVideo.pause();
+    modalVideo.currentTime = 0;
+    modalVideo.removeAttribute("src");
+    modalVideo.load();
+
+    modal.classList.add("hidden");
+    modal.classList.remove("flex");
+  }
+
+  closeModal.addEventListener("click", closePlayer);
+
+  modal.addEventListener("click", (event) => {
+    if (event.target === modal) {
+      closePlayer();
+    }
+  });
+</script>

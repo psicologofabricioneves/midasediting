@@ -2,41 +2,127 @@
 // components
 import Container from "../../elements/Container.astro";
 import Heading from "../../elements/Heading.astro";
-import Dropdown from "../../elements/Dropdown.astro";
-import ContainerBottom from "../../elements/ContainerBottom.astro";
+import Link from "../../elements/Link.astro";
 
-// content
-const services = [
-    { 
-        title: "Web Design",
-        text: "I focus on creating digital experiences that engage users, communicate your brand story, and drive conversions across all devices."
-    },
-    { 
-        title: "Product Design",
-        text: "From initial sketches to manufacturing-ready prototypes, I balance form and function to create products that resonate with users and stand out in the market."
-    },
-    { 
-        title: "Branding",
-        text: "From logo design to complete visual systems, I create cohesive brand experiences that build recognition and trust."
-    },
-    { 
-        title: "UI/UX Design",
-        text: "Through research-driven insights and user-centered design principles, I create interfaces that solve real problems while delivering exceptional experiences."
-    },
-]
+const shorts = [
+  "/videos/short1.mp4",
+  "/videos/short2.mp4",
+  "/videos/short3.mp4",
+  "/videos/short4.mp4",
+  "/videos/short5.mp4",
+];
 ---
 
-<Container variant={'md'}>
-    <Heading tagName="h2" tagSize="h2" class="text-center">Services</Heading>
-    <div class="flex flex-col gap-4">
-        <Container class="flex flex-col gap-4 p-6 border-3 border-base-900">
-            {
-                services.map((service, index) => (
-                    <Dropdown title=`${index + 1}. ${service.title}` text={service.text} />  
-                ))
-            }       
-        </Container>
-        <ContainerBottom />    
-    </div>
+<Container variant={"lg"} class="items-center">
+  <Heading tagName="h2" tagSize="h2" class="text-center">
+    SHORT FORM
+  </Heading>
 
+  <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 w-full">
+    {shorts.map((video) => (
+      <div
+        class="short-card relative aspect-[9/16] overflow-hidden cursor-pointer group"
+        data-video={video}
+      >
+        <video
+          src={video}
+          muted
+          playsinline
+          preload="metadata"
+          class="short-preview w-full h-full object-cover cursor-pointer"
+        ></video>
+
+        <button
+          type="button"
+          class="short-play absolute inset-0 flex items-center justify-center cursor-pointer group/play outline-none focus:outline-none focus:ring-0"
+          aria-label="Play video"
+        >
+          <span class="flex items-center justify-center w-20 h-20 rounded-full bg-black/60 border-2 border-white backdrop-blur-sm transition-all duration-300 group-hover/play:scale-110 group-hover/play:bg-black/80">
+            <svg
+              viewBox="0 0 24 24"
+              class="w-9 h-9 fill-white translate-x-[2px]"
+              aria-hidden="true"
+            >
+              <path d="M8 5v14l11-7z" />
+            </svg>
+          </span>
+        </button>
+      </div>
+    ))}
+  </div>
+  <Link variant={'button'} href="/works">All Works</Link>
 </Container>
+
+<div
+  id="short-modal"
+  class="fixed inset-0 bg-black/90 z-50 hidden items-center justify-center p-6"
+>
+  <button
+    id="close-short-modal"
+    type="button"
+    class="absolute top-6 right-6 text-white text-3xl cursor-pointer outline-none focus:outline-none focus:ring-0"
+    aria-label="Close video"
+  >
+    ✕
+  </button>
+
+  <video
+    id="short-modal-video"
+    controls
+    playsinline
+    class="max-h-[90vh] max-w-full"
+  ></video>
+</div>
+
+<script>
+  const shortCards = document.querySelectorAll(".short-card");
+  const shortModal = document.getElementById("short-modal");
+  const shortModalVideo = document.getElementById("short-modal-video");
+  const closeShortModal = document.getElementById("close-short-modal");
+
+  shortCards.forEach((card) => {
+    const preview = card.querySelector(".short-preview");
+    const button = card.querySelector(".short-play");
+    const src = card.dataset.video;
+
+    card.addEventListener("mouseenter", () => {
+      preview.play();
+    });
+
+    card.addEventListener("mouseleave", () => {
+      preview.pause();
+      preview.currentTime = 0;
+    });
+
+    button.addEventListener("click", () => {
+      preview.pause();
+      preview.currentTime = 0;
+
+      shortModalVideo.src = src;
+      shortModalVideo.currentTime = 0;
+
+      shortModal.classList.remove("hidden");
+      shortModal.classList.add("flex");
+
+      shortModalVideo.play();
+    });
+  });
+
+  function closeShortPlayer() {
+    shortModalVideo.pause();
+    shortModalVideo.currentTime = 0;
+    shortModalVideo.removeAttribute("src");
+    shortModalVideo.load();
+
+    shortModal.classList.add("hidden");
+    shortModal.classList.remove("flex");
+  }
+
+  closeShortModal.addEventListener("click", closeShortPlayer);
+
+  shortModal.addEventListener("click", (event) => {
+    if (event.target === shortModal) {
+      closeShortPlayer();
+    }
+  });
+</script>
