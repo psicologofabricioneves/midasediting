@@ -2,7 +2,6 @@
 // components
 import Container from "../../elements/Container.astro";
 import Heading from "../../elements/Heading.astro";
-import Link from "../../elements/Link.astro";
 
 const shorts = [
   "/videos/short1.mp4",
@@ -79,23 +78,43 @@ const shorts = [
   const shortModalVideo = document.getElementById("short-modal-video");
   const closeShortModal = document.getElementById("close-short-modal");
 
+  const isMobile = window.matchMedia("(max-width: 767px)").matches;
+
   shortCards.forEach((card) => {
     const preview = card.querySelector(".short-preview");
     const button = card.querySelector(".short-play");
     const src = card.dataset.video;
 
-    card.addEventListener("mouseenter", () => {
-      preview.play();
-    });
+    if (isMobile) {
+      preview.preload = "auto";
 
-    card.addEventListener("mouseleave", () => {
-      preview.pause();
-      preview.currentTime = 0;
-    });
+      const showStaticFrame = () => {
+        preview.pause();
+        preview.currentTime = 0.05;
+      };
+
+      if (preview.readyState >= 1) {
+        showStaticFrame();
+      } else {
+        preview.addEventListener("loadedmetadata", showStaticFrame, {
+          once: true,
+        });
+      }
+
+      preview.load();
+    } else {
+      card.addEventListener("mouseenter", () => {
+        preview.play();
+      });
+
+      card.addEventListener("mouseleave", () => {
+        preview.pause();
+        preview.currentTime = 0;
+      });
+    }
 
     button.addEventListener("click", () => {
       preview.pause();
-      preview.currentTime = 0;
 
       shortModalVideo.src = src;
       shortModalVideo.currentTime = 0;
