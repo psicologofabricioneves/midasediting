@@ -1,3 +1,73 @@
+---
+import Text from "../elements/Text.astro";
+import Heading from "../elements/Heading.astro";
+
+const { slug, title, client } = Astro.props;
+
+const videos = {
+  "cloudsync-suite": "/videos/video1.mp4",
+  "lumina": "/videos/video2.mp4",
+  "nourish-restaurant": "/videos/video33.mp4",
+  "smart-speaker": "/videos/video4.mp4",
+};
+
+const videoSrc = videos[slug];
+---
+
+<div class="work-card w-full" data-video={videoSrc}>
+  <div class="relative w-full aspect-video overflow-hidden group cursor-pointer">
+
+    <video
+      src={videoSrc}
+      muted
+      playsinline
+      preload="metadata"
+      class="preview-video w-full h-full object-cover cursor-pointer"
+    ></video>
+
+    <button
+      type="button"
+      class="play-button absolute inset-0 flex items-center justify-center cursor-pointer group/play outline-none focus:outline-none focus:ring-0"
+      aria-label={`Play ${title}`}
+    >
+      <span class="flex items-center justify-center w-24 h-24 rounded-full bg-black/60 border-2 border-white backdrop-blur-sm transition-all duration-300 group-hover/play:scale-110 group-hover/play:bg-black/80">
+        <svg
+          viewBox="0 0 24 24"
+          class="w-10 h-10 fill-white translate-x-[2px]"
+          aria-hidden="true"
+        >
+          <path d="M8 5v14l11-7z" />
+        </svg>
+      </span>
+    </button>
+
+  </div>
+
+  <Heading tagName="h3" tagSize="h4">{title}</Heading>
+  <Text variant={"md"}>{client}</Text>
+</div>
+
+<div
+  id="video-modal"
+  class="fixed inset-0 bg-black/90 z-50 hidden items-center justify-center p-6"
+>
+  <button
+    id="close-video-modal"
+    type="button"
+    class="absolute top-6 right-6 text-white text-3xl cursor-pointer outline-none focus:outline-none focus:ring-0"
+    aria-label="Close video"
+  >
+    ✕
+  </button>
+
+  <video
+    id="modal-video"
+    controls
+    playsinline
+    class="max-w-5xl w-full max-h-[85vh]"
+  ></video>
+</div>
+
 <script>
   const cards = document.querySelectorAll(".work-card");
   const modal = document.getElementById("video-modal");
@@ -12,25 +82,22 @@
     const src = card.dataset.video;
 
     if (isMobile) {
-      // No celular: carrega somente para conseguir exibir um frame parado
       preview.preload = "auto";
 
       const showStaticFrame = () => {
         preview.pause();
-        preview.currentTime = 0.05;
+
+        if (preview.duration > 0) {
+          preview.currentTime = 0.1;
+        }
       };
 
-      if (preview.readyState >= 1) {
-        showStaticFrame();
-      } else {
-        preview.addEventListener("loadedmetadata", showStaticFrame, {
-          once: true,
-        });
-      }
+      preview.addEventListener("loadeddata", showStaticFrame, {
+        once: true,
+      });
 
       preview.load();
     } else {
-      // Desktop: mantém preview ao passar o mouse
       card.addEventListener("mouseenter", () => {
         preview.play();
       });
@@ -41,7 +108,6 @@
       });
     }
 
-    // Desktop e mobile: abre o vídeo normalmente
     button.addEventListener("click", () => {
       preview.pause();
 
