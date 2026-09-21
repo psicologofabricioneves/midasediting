@@ -63,13 +63,9 @@ const contacts = [
                 >
                     <div class="flex justify-between items-start">
 
-                        <Heading
-                            tagName="h3"
-                            tagSize="h4"
-                            class="text-base-900"
-                        >
-                            {contact.title}
-                        </Heading>
+                        <p class="font-mono font-bold text-base md:text-lg uppercase text-base-900">
+                        {contact.title}
+                        </p>
 
                         <span class="text-base-900 text-xl transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1">
                             ↗
@@ -77,12 +73,9 @@ const contacts = [
 
                     </div>
 
-                    <Text
-                        variant={'xsm'}
-                        class="text-base-900 break-all"
-                    >
-                        {contact.value}
-                    </Text>
+                    <p class="font-mono text-sm text-base-900 break-all">
+                    {contact.value}
+                    </p>
 
                 </a>
             ))
