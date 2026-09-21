@@ -4,6 +4,8 @@ import Container from "../elements/Container.astro";
 import Heading from "../elements/Heading.astro";
 import Text from "../elements/Text.astro";
 
+const { minimal = false } = Astro.props;
+
 const contacts = [
     {
         title: "Email",
@@ -30,61 +32,74 @@ const contacts = [
 
 <Container variant={'xl'} class="mt-32 pb-8">
 
-    <!-- CTA -->
-    <div class="flex flex-col items-center text-center gap-4 mb-10">
+    {!minimal && (
+        <>
+            <!-- CTA -->
+            <div class="flex flex-col items-center text-center gap-4 mb-10">
 
-        <Heading
-            tagName="h2"
-            tagSize="h2"
-            class="text-base-900"
-        >
-            LET'S WORK TOGETHER
-        </Heading>
-
-        <Text
-            variant={'sm'}
-            class="text-base-900 max-w-xl"
-        >
-            Have a project in mind? Reach out through whichever platform works best for you.
-        </Text>
-
-    </div>
-
-    <!-- CONTACT CARDS -->
-    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 w-full">
-
-        {
-            contacts.map((contact) => (
-                <a
-                    href={contact.href}
-                    target={contact.href.startsWith("http") ? "_blank" : undefined}
-                    rel={contact.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                    class="group border-2 border-base-900 p-5 min-h-[150px] flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 cursor-pointer"
+                <Heading
+                    tagName="h2"
+                    tagSize="h2"
+                    class="text-base-900"
                 >
-                    <div class="flex justify-between items-start">
+                    LET'S WORK TOGETHER
+                </Heading>
 
-                        <p class="font-mono font-bold text-base md:text-lg uppercase text-base-900">
-                        {contact.title}
-                        </p>
+                <Text
+                    variant={'sm'}
+                    class="text-base-900 max-w-xl"
+                >
+                    Have a project in mind? Reach out through whichever platform works best for you.
+                </Text>
 
-                        <span class="text-base-900 text-xl transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1">
-                            ↗
-                        </span>
+            </div>
 
-                    </div>
+            <!-- CONTACT CARDS -->
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 w-full">
 
-                    <p class="font-mono text-sm text-base-900 break-all">
-                    {contact.value}
-                    </p>
+                {
+                    contacts.map((contact) => (
+                        <a
+                            href={contact.href}
+                            target={contact.href.startsWith("http") ? "_blank" : undefined}
+                            rel={contact.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                            class="group border-2 border-base-900 p-5 min-h-[150px] flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 cursor-pointer"
+                        >
+                            <div class="flex justify-between items-start">
 
-                </a>
-            ))
-        }
+                                <Text
+                                    variant={'lg'}
+                                    class="text-base-900 uppercase"
+                                >
+                                    {contact.title}
+                                </Text>
 
-    </div>
+                                <span class="text-base-900 text-xl transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1">
+                                    ↗
+                                </span>
+
+                            </div>
+
+                            <Text
+                                variant={'xsm'}
+                                class="text-base-900 break-all"
+                            >
+                                {contact.value}
+                            </Text>
+
+                        </a>
+                    ))
+                }
+
+            </div>
+        </>
+    )}
 
     <!-- COPYRIGHT -->
-    <div class="text-center mt-12">
+    <div class:list={[
+        "text-center",
+        minimal ? "mt-32 mb-8" : "mt-12"
+    ]}>
         <Text variant={'sm'} class="text-base-900">
             Midas Editing © 2026 All Rights Reserved
         </Text>
