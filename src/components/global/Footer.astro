@@ -3,101 +3,98 @@
 import Container from "../elements/Container.astro";
 import Heading from "../elements/Heading.astro";
 import Text from "../elements/Text.astro";
-import Link from "../elements/Link.astro";
 
-// links
-const socials = [
+const contacts = [
     {
-        title: "Twitter",
-        href: "https://x.com/midasediting"
+        title: "Email",
+        value: "psique.fabricio@gmail.com",
+        href: "mailto:psique.fabricio@gmail.com"
     },
     {
-        title: "Discord @angu8731",
+        title: "Discord",
+        value: "@angu8731",
         href: "https://discord.gg/RkU4UcTZZ"
     },
     {
         title: "Telegram",
+        value: "@algozcrosss",
         href: "https://t.me/algozcrosss"
     },
     {
-        title: "Email",
-        href: "mailto:psique.fabricio@gmail.com"
+        title: "Twitter",
+        value: "@midasediting",
+        href: "https://x.com/midasediting"
     }
-];
-
-const navigation = [
-    { title: "Home", href: "/" },
-    { title: "Contact", href: "/contact" }
 ];
 ---
 
 <Container variant={'xl'} class="mt-32 pb-8">
 
-    <div class="flex flex-col gap-10 md:flex-row">
+    <!-- CTA -->
+    <div class="flex flex-col items-center text-center gap-4 mb-10">
 
-        <div class="flex-1 md:text-left text-center">
+        <Heading
+            tagName="h2"
+            tagSize="h2"
+            class="text-base-900"
+        >
+            LET'S WORK TOGETHER
+        </Heading>
 
-            <Heading
-                tagName="h3"
-                tagSize="h4"
-                class="text-base-900 mb-5"
-            >
-                Socials
-            </Heading>
-
-            <ul>
-                {
-                    socials.map((social) => (
-                        <li>
-                            <Link
-                                variant={'nav'}
-                                href={social.href}
-                                target="_blank"
-                            >
-                                {social.title}
-                            </Link>
-                        </li>
-                    ))
-                }
-            </ul>
-
-        </div>
-
-        <div class="flex-1 md:text-right text-center">
-
-            <Heading
-                tagName="h3"
-                tagSize="h4"
-                class="text-base-900 mb-5"
-            >
-                Navigation
-            </Heading>
-
-            <ul>
-                {
-                    navigation.map((navLink) => (
-                        <li>
-                            <Link
-                                variant={'nav'}
-                                href={navLink.href}
-                            >
-                                {navLink.title}
-                            </Link>
-                        </li>
-                    ))
-                }
-            </ul>
-
-        </div>
+        <Text
+            variant={'sm'}
+            class="text-base-900 max-w-xl"
+        >
+            Have a project in mind? Reach out through whichever platform works best for you.
+        </Text>
 
     </div>
 
-    <div class="flex flex-col text-center">
+    <!-- CONTACT CARDS -->
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 w-full">
 
+        {
+            contacts.map((contact) => (
+                <a
+                    href={contact.href}
+                    target={contact.href.startsWith("http") ? "_blank" : undefined}
+                    rel={contact.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                    class="group border-2 border-base-900 p-5 min-h-[150px] flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 cursor-pointer"
+                >
+                    <div class="flex justify-between items-start">
+
+                        <Heading
+                            tagName="h3"
+                            tagSize="h4"
+                            class="text-base-900"
+                        >
+                            {contact.title}
+                        </Heading>
+
+                        <span class="text-base-900 text-xl transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1">
+                            ↗
+                        </span>
+
+                    </div>
+
+                    <Text
+                        variant={'xsm'}
+                        class="text-base-900 break-all"
+                    >
+                        {contact.value}
+                    </Text>
+
+                </a>
+            ))
+        }
+
+    </div>
+
+    <!-- COPYRIGHT -->
+    <div class="text-center mt-12">
         <Text variant={'sm'} class="text-base-900">
             Midas Editing © 2026 All Rights Reserved
         </Text>
-        
     </div>
 
 </Container>
