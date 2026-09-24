@@ -8,16 +8,30 @@ import Text from "../../elements/Text.astro";
 // content
 const clients = [
     {
-        name: "WARD FAMILY",
-        main: "4M+ combined subscribers",
-        detail: "Long-form for Golden Roblox • 469K subscribers",
+        name: "WARD",
+        main: "2.01M subscribers",
+        detail: "Long-form for youtube",
         image: "/clients/golden-roblox.jpg",
         url: "https://www.youtube.com/@WardGaming"
     },
+     {
+        name: "Sirius Roblox",
+        main: "1.53M subscribers",
+        detail: "Long-form for youtube",
+        image: "/clients/client-6.jpg",
+        url: "https://www.youtube.com/@SiriusRobloxFunny"
+    },
+    {
+        name: "Golden Roblox",
+        main: "470k subscribers",
+        detail: "Long-form for youtube",
+        image: "/clients/client-5.jpg",
+        url: "https://youtube.com/"
+    },
     {
         name: "@muitohumildee",
-        main: "1,5M on Instagram",
-        detail: "Short-form content",
+        main: "1.51M on Instagram",
+        detail: "Short-form for Instagram and Tiktok",
         image: "/clients/client-2.jpg",
         url: "https://www.instagram.com/muitohumildee/"
     },
@@ -43,30 +57,30 @@ const clients = [
         WORKED WITH
     </Heading>
 
-    <div class="grid grid-cols-2 lg:grid-cols-4 gap-5 w-full">
+    <div class="grid grid-cols-2 md:grid-cols-3 gap-5 w-full">
         {
             clients.map((client) => (
                 <div class="client-card flex flex-col items-center text-center border-3 border-base-900 p-6 cursor-default">
 
                     <a
-    href={client.url}
-    target="_blank"
-    rel="noopener noreferrer"
-    class="w-32 h-32 rounded-full overflow-hidden border-3 border-base-900 mb-5 cursor-pointer"
-    aria-label={`Visit ${client.name}`}
->
-    <img
-        src={client.image}
-        alt={client.name}
-        class="client-image w-full h-full object-cover transition-transform duration-300"
-    />
-</a>
+                        href={client.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="w-32 h-32 rounded-full overflow-hidden border-3 border-base-900 mb-5 cursor-pointer"
+                        aria-label={`Visit ${client.name}`}
+                    >
+                        <img
+                            src={client.image}
+                            alt={client.name}
+                            class="client-image w-full h-full object-cover transition-transform duration-300"
+                        />
+                    </a>
 
                     <div class="flex flex-col gap-2 items-center">
 
-                     <p class="font-mono font-bold text-lg uppercase text-base-900">
-                     {client.name}
-                     </p>
+                        <p class="font-mono font-bold text-lg uppercase text-base-900">
+                            {client.name}
+                        </p>
 
                         <Text
                             variant={'sm'}
