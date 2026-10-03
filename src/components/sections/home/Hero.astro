@@ -10,16 +10,40 @@ import Link from "../../elements/Link.astro"
 import peter from "../../../assets/images/Fotoeu.jpg";
 ---
 
-<Container variant={"xl"} class="flex flex-col gap-8 min-h-screen mb-8 md:-mb-32">
-    <Text variant={'xl'} class="text-base-900 lg:max-w-1/3 md:max-w-1/2 w-full">Hi, I'm Midas, a video editor, short and long form for youtube, working with storytelling, retention and pacing, it's a pleasure! </Text>
-    <Container class="flex md:flex-row flex-col gap-8">
-        <Container class="md:flex-2 flex flex-col items-start gap-4 md:-translate-y-15">
-    <Link variant={'button'} href="/contact">Available for work</Link>
-    <Heading tagName="h1" tagSize="h1">Midas Editing</Heading>
-</Container>
-        <Container class="h-full md:h-[500px] flex-1 md:-translate-y-60">
-    <ImageContainer src={peter} alt="Midas Editing" />
-</Container>
-    </Container>
-</Container>
+<Container variant={"xl"} class="flex flex-col min-h-screen mb-8 md:-mb-32">
 
+    <Container class="flex md:flex-row flex-col gap-8">
+
+        <!-- LEFT SIDE -->
+        <Container class="md:flex-2 flex flex-col items-start md:-translate-y-15">
+
+            <Heading tagName="h1" tagSize="h1">
+                Midas Editing
+            </Heading>
+
+            <div class="mt-6">
+                <Link variant={'button'} href="/contact">
+                    Available for work
+                </Link>
+            </div>
+
+            <Text
+                variant={'xl'}
+                class="text-base-900 mt-16 lg:max-w-[520px] md:max-w-[480px] w-full"
+            >
+                Hi, I'm Midas, a video editor, short and long form for YouTube, working with storytelling, retention and pacing. It's a pleasure!
+            </Text>
+
+        </Container>
+
+        <!-- RIGHT SIDE -->
+        <Container class="h-full md:h-[500px] flex-1 md:-translate-y-60">
+            <ImageContainer
+                src={peter}
+                alt="Midas Editing"
+            />
+        </Container>
+
+    </Container>
+
+</Container>
