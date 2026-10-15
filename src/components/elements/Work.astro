@@ -1,36 +1,47 @@
 ---
 import Text from "../elements/Text.astro";
-import Heading from "../elements/Heading.astro";
 
 const { slug, title, client } = Astro.props;
 
 const videos = {
-  "cloudsync-suite": "/videos/video11.mp4",
-  "lumina": "/videos/video0.mp4",
-  "nourish-restaurant": "/videos/video2.mp4",
-  "smart-speaker": "/videos/video33.mp4",
+  "cloudsync-suite": "lgcm4pJA9Ms",
+  "lumina": "7ubNn84pf20",
+  "nourish-restaurant": "d-t9YbVNNHk",
+  "smart-speaker": "JcDLZtfOQJA",
 };
 
-const videoSrc = videos[slug];
+const youtubeId = videos[slug];
+
+const thumbnail = youtubeId
+  ? `https://i.ytimg.com/vi/${youtubeId}/maxresdefault.jpg`
+  : "";
 ---
 
-<div class="work-card w-full" data-video={videoSrc}>
-  <div class="relative w-full aspect-video overflow-hidden group cursor-pointer">
+<div
+  class="work-card w-full"
+  data-youtube-id={youtubeId}
+>
+  <div
+    class="relative w-full aspect-video overflow-hidden group cursor-pointer"
+  >
 
-    <video
-      src={videoSrc}
-      muted
-      playsinline
-      preload="metadata"
-      class="preview-video w-full h-full object-cover cursor-pointer"
-    ></video>
+    <!-- THUMBNAIL -->
+    <img
+      src={thumbnail}
+      alt={`Thumbnail de ${title}`}
+      loading="lazy"
+      class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+    />
 
+    <!-- PLAY BUTTON -->
     <button
       type="button"
       class="play-button absolute inset-0 flex items-center justify-center cursor-pointer group/play outline-none focus:outline-none focus:ring-0"
       aria-label={`Play ${title}`}
     >
-      <span class="flex items-center justify-center w-24 h-24 rounded-full bg-black/60 border-2 border-white backdrop-blur-sm transition-all duration-300 group-hover/play:scale-110 group-hover/play:bg-black/80">
+      <span
+        class="flex items-center justify-center w-24 h-24 rounded-full bg-black/60 border-2 border-white backdrop-blur-sm transition-all duration-300 group-hover/play:scale-110 group-hover/play:bg-black/80"
+      >
         <svg
           viewBox="0 0 24 24"
           class="w-10 h-10 fill-white translate-x-[2px]"
@@ -43,102 +54,83 @@ const videoSrc = videos[slug];
 
   </div>
 
-  <p class="font-mono font-bold text-2xl md:text-3xl uppercase text-base-900">
-  {title}
-</p>
+  <p
+    class="font-mono font-bold text-2xl md:text-3xl uppercase text-base-900"
+  >
+    {title}
+  </p>
 
-<Text variant={"md"}>{client}</Text>
+  <Text variant={"md"}>
+    {client}
+  </Text>
 </div>
 
+<!-- YOUTUBE MODAL -->
 <div
-  id="video-modal"
-  class="fixed inset-0 bg-black/90 z-50 hidden items-center justify-center p-6"
+  class="youtube-modal fixed inset-0 bg-black/90 z-50 hidden items-center justify-center p-4 md:p-6"
 >
   <button
-    id="close-video-modal"
     type="button"
-    class="absolute top-6 right-6 text-white text-3xl cursor-pointer outline-none focus:outline-none focus:ring-0"
+    class="close-youtube-modal absolute top-6 right-6 text-white text-3xl cursor-pointer outline-none focus:outline-none focus:ring-0 z-10"
     aria-label="Close video"
   >
     ✕
   </button>
 
-  <video
-    id="modal-video"
-    controls
-    playsinline
-    class="max-w-5xl w-full max-h-[85vh]"
-  ></video>
+  <div class="w-full max-w-5xl aspect-video">
+    <iframe
+      class="youtube-player w-full h-full"
+      src=""
+      title={title}
+      allow="autoplay; encrypted-media; picture-in-picture"
+      allowfullscreen
+    ></iframe>
+  </div>
 </div>
 
 <script>
   const cards = document.querySelectorAll(".work-card");
-  const modal = document.getElementById("video-modal");
-  const modalVideo = document.getElementById("modal-video");
-  const closeModal = document.getElementById("close-video-modal");
-
-  const isMobile = window.matchMedia("(max-width: 767px)").matches;
 
   cards.forEach((card) => {
-    const preview = card.querySelector(".preview-video");
     const button = card.querySelector(".play-button");
-    const src = card.dataset.video;
+    const youtubeId = card.getAttribute("data-youtube-id");
 
-    if (isMobile) {
-      preview.preload = "auto";
+    const modal = card.nextElementSibling;
 
-      const showStaticFrame = () => {
-        preview.pause();
+    if (!button || !youtubeId || !modal) return;
 
-        if (preview.duration > 0) {
-          preview.currentTime = 0.1;
-        }
-      };
+    const iframe = modal.querySelector(".youtube-player");
+    const closeButton = modal.querySelector(".close-youtube-modal");
 
-      preview.addEventListener("loadeddata", showStaticFrame, {
-        once: true,
-      });
+    if (!(iframe instanceof HTMLIFrameElement)) return;
 
-      preview.load();
-    } else {
-      card.addEventListener("mouseenter", () => {
-        preview.play();
-      });
-
-      card.addEventListener("mouseleave", () => {
-        preview.pause();
-        preview.currentTime = 0;
-      });
-    }
-
-    button.addEventListener("click", () => {
-      preview.pause();
-
-      modalVideo.src = src;
-      modalVideo.currentTime = 0;
+    function openPlayer() {
+      iframe.src =
+        `https://www.youtube-nocookie.com/embed/${youtubeId}?autoplay=1&rel=0`;
 
       modal.classList.remove("hidden");
       modal.classList.add("flex");
 
-      modalVideo.play();
-    });
-  });
-
-  function closePlayer() {
-    modalVideo.pause();
-    modalVideo.currentTime = 0;
-    modalVideo.removeAttribute("src");
-    modalVideo.load();
-
-    modal.classList.add("hidden");
-    modal.classList.remove("flex");
-  }
-
-  closeModal.addEventListener("click", closePlayer);
-
-  modal.addEventListener("click", (event) => {
-    if (event.target === modal) {
-      closePlayer();
+      document.body.style.overflow = "hidden";
     }
+
+    function closePlayer() {
+      iframe.src = "";
+
+      modal.classList.add("hidden");
+      modal.classList.remove("flex");
+
+      document.body.style.overflow = "";
+    }
+
+    button.addEventListener("click", openPlayer);
+
+    closeButton?.addEventListener("click", closePlayer);
+
+    modal.addEventListener("click", (event) => {
+      if (event.target === modal) {
+        closePlayer();
+      }
+    });
   });
 </script>
