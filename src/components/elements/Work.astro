@@ -82,7 +82,7 @@ const thumbnail = youtubeId
       class="youtube-player w-full h-full"
       src=""
       title={title}
-      allow="autoplay; encrypted-media; picture-in-picture"
+      allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
       allowfullscreen
     ></iframe>
   </div>
@@ -105,13 +105,15 @@ const thumbnail = youtubeId
     if (!(iframe instanceof HTMLIFrameElement)) return;
 
     function openPlayer() {
-      iframe.src =
-        `https://www.youtube-nocookie.com/embed/${youtubeId}?autoplay=1&rel=0`;
-
+      // Abre o modal primeiro
       modal.classList.remove("hidden");
       modal.classList.add("flex");
 
       document.body.style.overflow = "hidden";
+
+      // Depois carrega o YouTube
+      iframe.src =
+        `https://www.youtube.com/embed/${youtubeId}?autoplay=1&playsinline=1&rel=0`;
     }
 
     function closePlayer() {
