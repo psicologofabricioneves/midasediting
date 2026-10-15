@@ -1,7 +1,7 @@
 ---
-title: "Music Documentary"
+title: "Gaming Content"
 slug: "smart-speaker"
-client: "Tyler the Creator"
+client: "House of the Locust"
 category: "Product Design"
 services: "Industrial Design, Prototyping, Design for Manufacturing"
 year: "2024"

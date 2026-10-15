@@ -1,7 +1,7 @@
 ---
-title: "Gaming Content"
+title: "IRL Roundtable"
 slug: "nourish-restaurant"
-client: "House of the Locust"
+client: "Find the Anime Hater"
 category: "Art Direction"
 services: "Art Direction, Digital Campaign, Brand Activation"
 year: "2025"

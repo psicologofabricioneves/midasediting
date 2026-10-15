@@ -1,7 +1,7 @@
 ---
-title: "IRL Roundtable"
+title: "Documentary"
 slug: "lumina"
-client: "Find the Anime Hater"
+client: "Tom Holland's Life"
 category: "Web Design"
 services: "Web Design, CMS Integration, Performance Optimization"
 year: "2024"
