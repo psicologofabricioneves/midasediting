@@ -6,10 +6,10 @@ import { Font } from "astro:assets";
 import Seo, { type Props as SEOProps } from "../../components/global/Seo.astro";
 
 // Site-wide defaults (edit these once for your whole site) 
-const SITE_NAME    = "Portfolio";
+const SITE_NAME    = "Midas Editing";
 const TITLE_TMPL   = "%s | Portfolio";
-const DEFAULT_OG   = "/og-image.png";   // place in /public/images/
-const TWITTER_SITE = "@handle";
+const DEFAULT_OG   = "/social-preview.jpg";
+const TWITTER_SITE = "@midasediting";
 const THEME_COLOR  = "#111111";
 const LOCALE       = "en_US";
 
@@ -40,9 +40,8 @@ const {
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-	<link rel="icon" href="/favicon.ico" />
 	<link rel="sitemap" href="/sitemap-index.xml" />
-	<Font cssVariable="--font-grunge" />
+	<Font cssVariable="--font-grunge" preload />
 	<Font cssVariable="--font-mono" />
 	<meta name="generator" content={Astro.generator} />
 	<Seo

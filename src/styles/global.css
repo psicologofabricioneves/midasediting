@@ -1,5 +1,9 @@
 @import "tailwindcss";
-@plugin "tailwindcss-noise";
+
+.noise-overlay {
+    background-image: url("../assets/ui/noise.webp");
+    opacity: 0.25;
+}
 
 @theme {
     /* COLORS */

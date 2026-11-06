@@ -43,7 +43,7 @@ const {
   canonical,
   keywords,
   robots,
-  ogImage,
+  ogImage: ogImagePath,
   ogImageAlt,
   ogImageWidth = 1200,
   ogImageHeight = 630,
@@ -67,7 +67,12 @@ const {
   nofollow = false,
 } = Astro.props;
 
-// Derived values 
+// Derived values
+
+// Redes sociais exigem URL absoluta na imagem de prévia
+const ogImage = ogImagePath
+  ? new URL(ogImagePath, Astro.site ?? Astro.url.origin).href
+  : undefined;
 
 const formattedTitle = titleTemplate
   ? titleTemplate.replace("%s", title)

@@ -19,12 +19,13 @@ export default defineConfig({
       name: "JetBrains Mono",
       cssVariable: "--font-mono",
       fallbacks: ["monospace"],
-      weights: [400, 500, 600, 700, 800],
+      weights: [400, 600, 700],
+      styles: ["normal"],
     }],
   vite: {
     plugins: [tailwindcss()]
   },
 
   integrations: [sitemap()],
-  site: "https://grunge.pages.dev"
+  site: "https://midasediting.com"
 });

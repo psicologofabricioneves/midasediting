@@ -14,7 +14,9 @@ import { getImage } from "astro:assets";
 
 const backgroundImage = await getImage({
 	src: bg,
-	format: "jpg"
+	format: "webp",
+	width: 1920,
+	quality: 60
 });
 
 // props
@@ -52,7 +54,7 @@ const minimalFooter = Astro.url.pathname !== "/";
 		style=`background-image: url(${backgroundImage.src})`
 		class="bg-cover bg-center bg-no-repeat bg-fixed box-border"
 	>
-		<div class="noise-[67,22,25] fixed inset-0 pointer-events-none"></div>
+		<div class="noise-overlay fixed inset-0 pointer-events-none"></div>
 
 		<Wrapper>
 			<NavBar />

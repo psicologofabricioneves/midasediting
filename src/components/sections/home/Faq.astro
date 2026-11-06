@@ -5,48 +5,57 @@ import ContainerBottom from "../../elements/ContainerBottom.astro";
 import Heading from "../../elements/Heading.astro";
 import Text from "../../elements/Text.astro";
 
+// assets
+import { Image } from "astro:assets";
+import ward from "../../../assets/clients/golden-roblox.jpg";
+import sirius from "../../../assets/clients/client-6.jpg";
+import golden from "../../../assets/clients/client-5.jpg";
+import muitoHumildee from "../../../assets/clients/client-2.jpg";
+import malcolm from "../../../assets/clients/client-3.jpg";
+import imaLoser from "../../../assets/clients/client-4.webp";
+
 // content
 const clients = [
     {
         name: "WARD",
         main: "2.01M subscribers",
         detail: "Long-form for youtube",
-        image: "/clients/golden-roblox.jpg",
+        image: ward,
         url: "https://www.youtube.com/@WardGaming"
     },
      {
         name: "Sirius Roblox",
         main: "1.53M subscribers",
         detail: "Long-form for youtube",
-        image: "/clients/client-6.jpg",
+        image: sirius,
         url: "https://www.youtube.com/@SiriusRobloxFunny"
     },
     {
         name: "Golden Roblox",
         main: "470k subscribers",
         detail: "Long-form for youtube",
-        image: "/clients/client-5.jpg",
+        image: golden,
         url: "https://youtube.com/"
     },
     {
         name: "@muitohumildee",
         main: "1.51M on Instagram",
         detail: "Short-form for Instagram and Tiktok",
-        image: "/clients/client-2.jpg",
+        image: muitoHumildee,
         url: "https://www.instagram.com/muitohumildee/"
     },
     {
         name: "Malcolm Crawford",
         main: "6.58K subscribers",
         detail: "Long-form and Short-form for youtube",
-        image: "/clients/client-3.jpg",
+        image: malcolm,
         url: "https://www.youtube.com/@malcolmcrawford_"
     },
     {
         name: "IMALOSERONG",
         main: "790 followers on Kick",
         detail: "Live content",
-        image: "/clients/client-4.webp",
+        image: imaLoser,
         url: "https://kick.com/imaloserong"
     }
 ];
@@ -69,9 +78,15 @@ const clients = [
                         class="w-32 h-32 rounded-full overflow-hidden border-3 border-base-900 mb-5 cursor-pointer"
                         aria-label={`Visit ${client.name}`}
                     >
-                        <img
+                        <Image
                             src={client.image}
                             alt={client.name}
+                            width={256}
+                            height={256}
+                            fit="cover"
+                            format="webp"
+                            loading="lazy"
+                            decoding="async"
                             class="client-image w-full h-full object-cover transition-transform duration-300"
                         />
                     </a>

@@ -12,9 +12,11 @@ const videos = {
 
 const youtubeId = videos[slug];
 
-const thumbnail = youtubeId
-  ? `https://i.ytimg.com/vi/${youtubeId}/maxresdefault.jpg`
-  : "";
+const thumbBase = `https://i.ytimg.com/vi_webp/${youtubeId}`;
+const thumbnail = youtubeId ? `${thumbBase}/sddefault.webp` : "";
+const thumbnailSrcset = youtubeId
+  ? `${thumbBase}/mqdefault.webp 320w, ${thumbBase}/sddefault.webp 640w, ${thumbBase}/maxresdefault.webp 1280w`
+  : undefined;
 ---
 
 <div
@@ -28,8 +30,13 @@ const thumbnail = youtubeId
     <!-- THUMBNAIL -->
     <img
       src={thumbnail}
+      srcset={thumbnailSrcset}
+      sizes="(min-width: 1200px) 33vw, (min-width: 768px) 66vw, 100vw"
       alt={`Thumbnail de ${title}`}
+      width="640"
+      height="360"
       loading="lazy"
+      decoding="async"
       class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
     />
 
