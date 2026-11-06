@@ -6,6 +6,8 @@
     --color-lead: #a5a096;
     --color-bone: #f1ebdd;
     --color-gold: #eeb422;
+    --color-gold-soft: #dcc07a;
+    --color-gold-deep: #a88a48;
 
     --font-display: var(--font-midas-display);
     --font-body: var(--font-midas-body);
@@ -207,15 +209,22 @@ body {
     color: var(--color-gold);
 }
 
-/* Faixa de clientes */
-.marquee-track {
-    animation: marquee 32s linear infinite;
+/* Fim da página: folha de ouro fosca, sem o amarelo puro */
+.gold-leaf {
+    position: relative;
+    background:
+        radial-gradient(ellipse 70% 60% at 70% 100%, rgb(255 238 195 / 0.2), transparent),
+        linear-gradient(to bottom, var(--color-gold-deep), #c8aa66);
 }
 
-@keyframes marquee {
-    to {
-        transform: translateX(-50%);
-    }
+.gold-leaf::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: url("../assets/ui/noise.webp");
+    opacity: 0.06;
+    pointer-events: none;
+    mask-image: linear-gradient(to bottom, transparent, black 40%);
 }
 
 /* Curva de retenção desenhada conforme a rolagem */
@@ -246,10 +255,6 @@ dialog.player::backdrop {
 @media (prefers-reduced-motion: reduce) {
     html {
         scroll-behavior: auto;
-    }
-
-    .marquee-track {
-        animation: none;
     }
 
     .touch-color,
