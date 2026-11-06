@@ -1,0 +1,33 @@
+---
+// Capa em chumbo que ganha cor ao ser tocada e abre o player.
+const { youtubeId, title, client, vertical = false, sizes, class: className } = Astro.props;
+
+const base = `https://i.ytimg.com/vi_webp/${youtubeId}`;
+const src = vertical ? `https://i.ytimg.com/vi/${youtubeId}/hqdefault.jpg` : `${base}/sddefault.webp`;
+const srcset = vertical ? undefined : `${base}/mqdefault.webp 320w, ${base}/sddefault.webp 640w, ${base}/maxresdefault.webp 1280w`;
+const label = title ? `Play ${title} for ${client}` : "Play short";
+---
+
+<div class={className}>
+    <button
+        type="button"
+        class:list={["touch group", vertical ? "aspect-[9/16]" : "aspect-video"]}
+        data-play={youtubeId}
+        data-vertical={vertical ? "" : undefined}
+        aria-label={label}
+    >
+        <img class="touch-lead" src={src} srcset={srcset} sizes={sizes} alt="" width="640" height="360" loading="lazy" decoding="async" />
+        <span class="touch-color">
+            <img src={src} srcset={srcset} sizes={sizes} alt="" width="640" height="360" loading="lazy" decoding="async" />
+        </span>
+        <span class="absolute bottom-3 left-3 w-9 h-9 flex items-center justify-center rounded-full bg-gold text-ink transition-transform group-hover:scale-110" aria-hidden="true">
+            <svg viewBox="0 0 24 24" class="w-4 h-4 fill-current translate-x-px"><path d="M8 5v14l11-7z"></path></svg>
+        </span>
+    </button>
+    {title && (
+        <div class="flex items-baseline justify-between gap-4 mt-3">
+            <h3 class="display text-2xl md:text-3xl">{title}</h3>
+            <p class="eyebrow text-right">{client}</p>
+        </div>
+    )}
+</div>

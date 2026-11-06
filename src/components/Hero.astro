@@ -1,0 +1,52 @@
+---
+import { topClients } from "../data/site";
+
+const strip = topClients.map((client) => `${client.name} ${client.reach}`);
+---
+
+<section data-chapter="Hook" class="relative min-h-svh flex flex-col justify-between pt-20 md:pt-24 overflow-hidden">
+    <div class="px-5 md:px-10">
+        <h1 class="display text-[15vw] md:text-[min(10.5vw,21vh)]">
+            Your footage,<br />
+            <span class="gold-word">turned to gold.</span>
+        </h1>
+
+        <div class="grid md:grid-cols-12 gap-8 md:gap-10 mt-8 md:mt-10 items-end">
+            <div class="md:col-span-6 flex flex-col gap-5">
+                <p class="text-lg md:text-xl leading-snug max-w-md">
+                    I'm Midas, a psychologist who edits YouTube videos. I study why people look away, then I cut so they don't.
+                </p>
+                <div class="flex flex-wrap gap-3">
+                    <a href="#end" class="btn">Work with me</a>
+                    <a href="#work" class="btn btn-ghost">See the work</a>
+                </div>
+                <p class="eyebrow">Keep scrolling. This page turns gold by the end.</p>
+            </div>
+
+            <figure class="md:col-span-6 md:col-start-7">
+                <video
+                    data-src="/videos/reel.mp4"
+                    poster="/videos/reel-poster.webp"
+                    muted
+                    loop
+                    playsinline
+                    preload="none"
+                    aria-label="Fast montage of clips from videos edited by Midas"
+                    class="gild w-full aspect-video object-cover bg-soot"
+                ></video>
+            </figure>
+        </div>
+    </div>
+
+    <div class="mt-6 mb-12 border-y border-soot overflow-hidden py-3" aria-label="Clients">
+        <div class="marquee-track flex w-max font-mono text-sm uppercase">
+            {[0, 1, 2, 3].map((copy) => (
+                <ul class="flex shrink-0" aria-hidden={copy > 0 ? "true" : undefined}>
+                    {strip.map((item) => (
+                        <li class="px-6"><span class="text-gold mr-6" aria-hidden="true">●</span>{item}</li>
+                    ))}
+                </ul>
+            ))}
+        </div>
+    </div>
+</section>

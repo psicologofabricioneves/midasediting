@@ -1,16 +1,13 @@
 ---
-// layout 
-import Layout from "../layouts/Layout.astro"
-
-// components
-import Intro from "../components/sections/contact/Intro.astro"
-import ContactDetails from "../components/sections/contact/ContactDetails.astro"
+import Layout from "../layouts/Layout.astro";
+import End from "../components/End.astro";
 ---
 
-<Layout 
+<Layout
     title="Contact"
     description="Get in touch with Midas Editing, a video editor for YouTube long-form and short-form content."
+    timeline={false}
 >
-    <ContactDetails />
-    <Intro />
+    <div class="pt-16"></div>
+    <End headingTag="h1" />
 </Layout>

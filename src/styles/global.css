@@ -1,55 +1,230 @@
 @import "tailwindcss";
 
-.noise-overlay {
-    background-image: url("../assets/ui/noise.webp");
-    opacity: 0.25;
+@theme {
+    --color-ink: #0c0b09;
+    --color-soot: #1a1815;
+    --color-lead: #a5a096;
+    --color-bone: #f1ebdd;
+    --color-gold: #eeb422;
+
+    --font-display: var(--font-midas-display);
+    --font-body: var(--font-midas-body);
+    --font-mono: var(--font-midas-mono);
 }
 
-@theme {
-    /* COLORS */
-    --color-base-100: oklch(14% 0.004 49.25);
-    --color-base-200: oklch(21% 0.006 56.043);
-    --color-base-300: oklch(26% 0.007 34.298);
-    --color-base-400: oklch(37% 0.01 67.558);
-    --color-base-500: oklch(44% 0.011 73.639);
-    --color-base-600: oklch(55% 0.013 58.071);
-    --color-base-700: oklch(70% 0.01 56.259);
-    --color-base-800: oklch(86% 0.005 56.366);
-    --color-base-900: oklch(98% 0.001 106.423);
+@property --touch-radius {
+    syntax: "<percentage>";
+    inherits: false;
+    initial-value: 0%;
+}
 
-    /* FONTS */
-    --font-grunge: var(--font-grunge);
-    --font-mono: var(--font-mono);
+html {
+    scroll-behavior: smooth;
+    background: var(--color-ink);
+}
 
-    /* TEXT SIZES */
-    --text-216: 13.5rem;
-    --text-128: 8rem;
-    --text-96: 6rem;
-    --text-80: 5rem;
-    --text-64: 4rem;
-    --text-48: 3rem;
-    --text-40: 2.5rem;
-    --text-32: 2rem;
-    --text-24: 1.5rem;
-    --text-20: 1.25rem;
-    --text-16: 1rem;
-    --text-12: 0.75rem;
+body {
+    /* A página esquenta aos poucos até virar ouro no fim */
+    background: color-mix(in oklab, var(--color-ink), var(--color-gold) calc(var(--scroll, 0) * 15%));
+    color: var(--color-bone);
+    font-family: var(--font-body);
+    padding-bottom: 3rem;
+}
 
-    /* ANIMATIONS */
-    --animate-spin: spin 5s linear infinite;
-    @keyframes spin {
-        from {
-          transform: rotate(0deg);
-        }
-        to {
-          transform: rotate(360deg);
-        }
+::selection {
+    background: var(--color-gold);
+    color: var(--color-ink);
+}
+
+:focus-visible {
+    outline: 2px solid var(--color-gold);
+    outline-offset: 3px;
+}
+
+.grain {
+    background-image: url("../assets/ui/noise.webp");
+    opacity: 0.06;
+}
+
+.display {
+    font-family: var(--font-display);
+    font-weight: 400;
+    letter-spacing: -0.03em;
+    line-height: 0.95;
+}
+
+.gold-word {
+    color: var(--color-gold);
+    font-style: italic;
+}
+
+.eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-lead);
+}
+
+/* Botão principal */
+.btn {
+    display: inline-block;
+    padding: 0.9rem 1.5rem;
+    font-weight: 600;
+    background: var(--color-gold);
+    color: var(--color-ink);
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.btn:hover {
+    background: var(--color-bone);
+}
+
+.btn-ghost {
+    background: transparent;
+    color: var(--color-bone);
+    box-shadow: inset 0 0 0 1px var(--color-lead);
+}
+
+.btn-ghost:hover {
+    background: transparent;
+    color: var(--color-gold);
+    box-shadow: inset 0 0 0 1px var(--color-gold);
+}
+
+/* O toque: a cor se espalha a partir do ponto tocado */
+.touch {
+    position: relative;
+    overflow: hidden;
+    display: block;
+    width: 100%;
+    cursor: pointer;
+    --x: 50%;
+    --y: 50%;
+}
+
+.touch img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.touch-lead {
+    filter: grayscale(1) brightness(0.8) contrast(1.05);
+}
+
+.touch-color {
+    position: absolute;
+    inset: 0;
+    clip-path: circle(var(--touch-radius) at var(--x) var(--y));
+    transition: --touch-radius 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.touch:hover .touch-color,
+.touch:focus-visible .touch-color,
+.touch.is-touched .touch-color {
+    --touch-radius: 150%;
+}
+
+.touch::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    box-shadow: inset 0 0 0 0 var(--color-gold);
+    transition: box-shadow 0.3s;
+    pointer-events: none;
+}
+
+.touch:hover::after,
+.touch:focus-visible::after,
+.touch.is-touched::after {
+    box-shadow: inset 0 0 0 2px var(--color-gold);
+}
+
+/* Imagem e vídeo banhados em ouro */
+.gild {
+    filter: grayscale(1) sepia(1) saturate(2.3) hue-rotate(-22deg) brightness(0.78) contrast(1.12);
+    transition: filter 0.6s;
+}
+
+.gild:hover {
+    filter: none;
+}
+
+/* Reservado para material que o Midas ainda vai enviar */
+.todo {
+    border: 1px dashed var(--color-gold);
+    background: color-mix(in oklab, var(--color-gold) 7%, transparent);
+    color: var(--color-bone);
+}
+
+.todo-tag {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-gold);
+}
+
+.todo-inline {
+    font-family: var(--font-mono);
+    font-size: 0.8em;
+    color: var(--color-gold);
+    border-bottom: 1px dashed var(--color-gold);
+}
+
+/* Faixa de clientes */
+.marquee-track {
+    animation: marquee 32s linear infinite;
+}
+
+@keyframes marquee {
+    to {
+        transform: translateX(-50%);
+    }
+}
+
+/* Curva de retenção desenhada conforme a rolagem */
+.curve-line {
+    stroke-dasharray: 1;
+    stroke-dashoffset: calc(1 - var(--draw, 0));
+}
+
+/* No celular os rótulos ficariam ilegíveis; a lista abaixo explica cada ponto */
+@media (max-width: 767px) {
+    .curve-labels text {
+        display: none;
+    }
+}
+
+/* Player */
+dialog.player {
+    margin: auto;
+    background: transparent;
+    max-width: none;
+    max-height: none;
+}
+
+dialog.player::backdrop {
+    background: rgb(0 0 0 / 0.92);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
     }
 
-    /* BREAKPOINTS */
-    --breakpoint-xsm: 320px;
-    --breakpoint-sm: 480px;
-    --breakpoint-md: 768px;
-    --breakpoint-lg: 1200px;
-    --breakpoint-xl: 1440px;
+    .marquee-track {
+        animation: none;
+    }
+
+    .touch-color,
+    .gild {
+        transition: none;
+    }
+
+    .curve-line {
+        stroke-dashoffset: 0;
+    }
 }

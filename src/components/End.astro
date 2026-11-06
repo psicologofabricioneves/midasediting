@@ -1,0 +1,39 @@
+---
+import { contacts } from "../data/site";
+
+const { headingTag: HeadingTag = "h2" } = Astro.props;
+const [primary, ...others] = contacts;
+---
+
+<div class="h-40 md:h-64 mt-20" style="background: linear-gradient(to bottom, transparent, var(--color-gold))" aria-hidden="true"></div>
+
+<section id="end" data-chapter="The end" class="bg-gold text-ink px-5 md:px-10 pt-6 pb-16 scroll-mt-4">
+    <p class="font-mono text-xs uppercase tracking-wider mb-6"><span class="tc">02:30</span> / The end</p>
+
+    <HeadingTag class="display text-[15vw] md:text-[10.5vw]">
+        You just watched<br />the whole page.
+    </HeadingTag>
+
+    <p class="text-xl md:text-3xl leading-snug max-w-3xl mt-8">
+        Most sites lose people in seconds. You stayed to the end. That's what I do for your viewers. Tell me about your channel.
+    </p>
+
+    <div class="mt-10 flex flex-col lg:flex-row gap-8 lg:items-end justify-between">
+        <a href={primary.href} class="inline-block bg-ink text-gold hover:bg-bone hover:text-ink transition-colors px-6 py-5 md:px-8 md:py-6 self-start">
+            <span class="display text-4xl md:text-6xl block">Email me</span>
+            <span class="font-mono text-xs break-all mt-1 block">{primary.value}</span>
+        </a>
+
+        <ul class="flex flex-wrap gap-x-8 gap-y-3 text-lg md:text-xl font-semibold">
+            {others.map((contact) => (
+                <li>
+                    <a href={contact.href} target="_blank" rel="noopener noreferrer" class="underline underline-offset-4 decoration-2 hover:no-underline">
+                        {contact.title} <span class="font-mono text-xs font-normal">{contact.value}</span>
+                    </a>
+                </li>
+            ))}
+        </ul>
+    </div>
+
+    <p class="font-mono text-xs mt-16">Midas Editing © 2026 All Rights Reserved</p>
+</section>

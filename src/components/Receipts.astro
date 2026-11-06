@@ -1,0 +1,33 @@
+---
+import Chapter from "./Chapter.astro";
+
+// Espaços reservados: troque pelo material real antes de publicar.
+const quotes = [
+    { who: "Client name, channel, subscribers", what: "1 or 2 sentences from a client about what changed after working with you." },
+    { who: "Client name, channel, subscribers", what: "A second quote, ideally from WARD or Sirius Roblox, the biggest names on the page." },
+];
+---
+
+<Chapter name="Receipts">
+    <h2 class="display text-6xl md:text-[8vw]">Don't take <span class="gold-word">my word.</span></h2>
+
+    <div class="grid lg:grid-cols-12 gap-6 mt-10 md:mt-14">
+        <div class="todo lg:col-span-7 aspect-video flex flex-col items-center justify-center text-center p-6 gap-3">
+            <p class="todo-tag">To fill: image</p>
+            <p class="display text-3xl md:text-5xl">Retention graph</p>
+            <p class="max-w-md text-sm md:text-base">
+                A YouTube Studio screenshot of a video you edited, showing audience retention. Ask the client's permission and hide private data.
+            </p>
+        </div>
+
+        <div class="lg:col-span-5 flex flex-col gap-6">
+            {quotes.map((quote) => (
+                <blockquote class="todo flex-1 p-6 flex flex-col justify-between gap-6">
+                    <p class="todo-tag">To fill: testimonial</p>
+                    <p class="display text-2xl md:text-3xl">"{quote.what}"</p>
+                    <footer class="eyebrow">{quote.who}</footer>
+                </blockquote>
+            ))}
+        </div>
+    </div>
+</Chapter>

@@ -1,0 +1,38 @@
+<dialog id="player" class="player p-0 w-full h-full" aria-label="Video player">
+    <div class="w-full h-full flex items-center justify-center p-4 md:p-8">
+        <button id="player-close" type="button" class="absolute top-4 right-4 md:top-6 md:right-6 z-10 font-mono text-sm text-bone hover:text-gold cursor-pointer">
+            Close ✕
+        </button>
+        <div id="player-frame" class="w-full max-w-5xl aspect-video">
+            <iframe
+                id="player-video"
+                class="w-full h-full"
+                title="Video player"
+                allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
+                allowfullscreen
+            ></iframe>
+        </div>
+    </div>
+</dialog>
+
+<script>
+  const dialog = document.getElementById("player") as HTMLDialogElement;
+  const frame = document.getElementById("player-frame") as HTMLElement;
+  const iframe = document.getElementById("player-video") as HTMLIFrameElement;
+  const closeButton = document.getElementById("player-close") as HTMLButtonElement;
+
+  document.querySelectorAll<HTMLElement>("[data-play]").forEach((button) => {
+    button.addEventListener("click", () => {
+      const vertical = button.dataset.vertical !== undefined;
+      frame.className = vertical ? "h-[85vh] aspect-[9/16] max-w-full" : "w-full max-w-5xl aspect-video";
+      iframe.src = `https://www.youtube.com/embed/${button.dataset.play}?autoplay=1&playsinline=1&rel=0`;
+      dialog.showModal();
+    });
+  });
+
+  closeButton.addEventListener("click", () => dialog.close());
+  dialog.addEventListener("click", (event) => {
+    if (event.target !== iframe && event.target !== closeButton) dialog.close();
+  });
+  dialog.addEventListener("close", () => iframe.removeAttribute("src"));
+</script>

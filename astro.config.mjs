@@ -10,16 +10,26 @@ export default defineConfig({
   fonts: [
     {
       provider: fontProviders.fontsource(),
-      name: "Road Rage",
-      cssVariable: "--font-grunge",
-      fallbacks: ["system-ui"]
+      name: "Bodoni Moda",
+      cssVariable: "--font-midas-display",
+      fallbacks: ["Georgia", "serif"],
+      weights: [400],
+      styles: ["normal", "italic"],
+    },
+    {
+      provider: fontProviders.fontsource(),
+      name: "Instrument Sans",
+      cssVariable: "--font-midas-body",
+      fallbacks: ["system-ui", "sans-serif"],
+      weights: [400, 600],
+      styles: ["normal"],
     },
     {
       provider: fontProviders.fontsource(),
       name: "JetBrains Mono",
-      cssVariable: "--font-mono",
+      cssVariable: "--font-midas-mono",
       fallbacks: ["monospace"],
-      weights: [400, 600, 700],
+      weights: [400],
       styles: ["normal"],
     }],
   vite: {

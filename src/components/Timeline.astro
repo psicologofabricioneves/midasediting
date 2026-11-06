@@ -1,0 +1,78 @@
+<div id="timeline" class="fixed bottom-0 inset-x-0 z-40 h-12 bg-ink border-t border-soot flex items-center gap-4 px-5 md:px-10 font-mono text-xs" role="presentation">
+    <span class="text-bone shrink-0 tabular-nums"><span id="tc-now">00:00</span><span class="text-lead"> / 02:30</span></span>
+    <div id="tc-track" class="relative flex-1 h-1.5 bg-soot">
+        <div id="tc-fill" class="absolute inset-y-0 left-0 w-full bg-gold origin-left" style="transform: scaleX(0)"></div>
+    </div>
+    <span id="tc-chapter" class="text-gold shrink-0 uppercase w-16 sm:w-24 text-right">Hook</span>
+</div>
+
+<script>
+  const DURATION = 150; // 02:30: a página inteira é tratada como um vídeo
+
+  const now = document.getElementById("tc-now");
+  const fill = document.getElementById("tc-fill");
+  const chapterLabel = document.getElementById("tc-chapter");
+  const track = document.getElementById("tc-track");
+  const chapters = [...document.querySelectorAll<HTMLElement>("[data-chapter]")];
+  const curve = document.getElementById("curve");
+
+  const format = (seconds: number) => {
+    const m = String(Math.floor(seconds / 60)).padStart(2, "0");
+    const s = String(Math.floor(seconds % 60)).padStart(2, "0");
+    return `${m}:${s}`;
+  };
+
+  const maxScroll = () => document.documentElement.scrollHeight - innerHeight;
+
+  // Minutagem de cada capítulo e marcas na barra
+  const placeChapters = () => {
+    track?.querySelectorAll(".tick").forEach((tick) => tick.remove());
+    chapters.forEach((chapter) => {
+      const top = chapter.getBoundingClientRect().top + scrollY;
+      const position = Math.min(top / maxScroll(), 1);
+      const label = chapter.querySelector(".tc");
+      if (label) label.textContent = format(position * DURATION);
+      if (position > 0 && position < 1) {
+        const tick = document.createElement("span");
+        tick.className = "tick absolute inset-y-0 w-0.5 bg-ink";
+        tick.style.left = `${position * 100}%`;
+        track?.append(tick);
+      }
+    });
+  };
+
+  let queued = false;
+  const update = () => {
+    queued = false;
+    const progress = Math.min(scrollY / maxScroll(), 1);
+
+    document.documentElement.style.setProperty("--scroll", progress.toFixed(3));
+    if (now) now.textContent = format(progress * DURATION);
+    if (fill) fill.style.transform = `scaleX(${progress})`;
+
+    const current = chapters.filter((chapter) => chapter.getBoundingClientRect().top < innerHeight * 0.5).pop();
+    if (current && chapterLabel) chapterLabel.textContent = current.dataset.chapter ?? "";
+
+    if (curve) {
+      const box = curve.getBoundingClientRect();
+      const drawn = Math.min(Math.max((innerHeight * 0.9 - box.top) / (box.height + innerHeight * 0.3), 0), 1);
+      curve.style.setProperty("--draw", drawn.toFixed(3));
+    }
+  };
+
+  const queue = () => {
+    if (!queued) {
+      queued = true;
+      requestAnimationFrame(update);
+    }
+  };
+
+  addEventListener("scroll", queue, { passive: true });
+  addEventListener("resize", () => {
+    placeChapters();
+    queue();
+  });
+  addEventListener("load", placeChapters);
+  placeChapters();
+  update();
+</script>

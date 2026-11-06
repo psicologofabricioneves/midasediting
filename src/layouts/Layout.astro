@@ -2,68 +2,109 @@
 // stylesheet
 import "../styles/global.css";
 
-// components
-import BaseHead from "../components/global/BaseHead.astro";
-import Wrapper from "../components/global/Wrapper.astro";
-import NavBar from "../components/global/Navigation.astro";
-import Footer from "../components/global/Footer.astro";
-
 // assets
-import bg from "../assets/images/bg.jpg";
-import { getImage } from "astro:assets";
+import { Font } from "astro:assets";
 
-const backgroundImage = await getImage({
-	src: bg,
-	format: "webp",
-	width: 1920,
-	quality: 60
-});
+// components
+import Seo from "../components/Seo.astro";
+import Header from "../components/Header.astro";
+import Timeline from "../components/Timeline.astro";
+import Player from "../components/Player.astro";
 
-// props
 const {
 	title,
 	description,
-	titleTemplate,
-	siteName,
-	ogImage,
-	twitterSite,
-	themeColor,
-	locale,
+	ogImage = "/social-preview.jpg",
+	timeline = true,
 	...seoProps
 } = Astro.props;
-
-const minimalFooter = Astro.url.pathname !== "/";
 ---
 
 <!doctype html>
 
-<html lang="en" class="scroll-smooth">
-	<BaseHead
-		title={title}
-		description={description}
-		titleTemplate={titleTemplate}
-		siteName={siteName}
-		ogImage={ogImage}
-		twitterSite={twitterSite}
-		themeColor={themeColor}
-		locale={locale}
-		{...seoProps}
-	/>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="sitemap" href="/sitemap-index.xml" />
+		<Font cssVariable="--font-midas-display" preload />
+		<Font cssVariable="--font-midas-body" />
+		<Font cssVariable="--font-midas-mono" />
+		<Seo
+			title={title}
+			description={description}
+			titleTemplate="%s | Midas Editing"
+			siteName="Midas Editing"
+			ogImage={ogImage}
+			twitterSite="@midasediting"
+			themeColor="#0c0b09"
+			{...seoProps}
+		/>
+	</head>
 
-	<body
-		style=`background-image: url(${backgroundImage.src})`
-		class="bg-cover bg-center bg-no-repeat bg-fixed box-border"
-	>
-		<div class="noise-overlay fixed inset-0 pointer-events-none"></div>
+	<body>
+		<div class="grain fixed inset-0 pointer-events-none z-0" aria-hidden="true"></div>
 
-		<Wrapper>
-			<NavBar />
-
-			<main class="flex flex-col xl:gap-48 lg:gap-40 gap-28">
+		<div class="relative z-10">
+			<Header />
+			<main>
 				<slot />
 			</main>
+		</div>
 
-			<Footer minimal={minimalFooter} />
-		</Wrapper>
+		{timeline && <Timeline />}
+		<Player />
+
+		<script>
+			// O toque: a cor se espalha a partir do ponto em que o cursor entrou.
+			const touchables = document.querySelectorAll<HTMLElement>(".touch");
+
+			touchables.forEach((element) => {
+				element.addEventListener("pointerenter", (event) => {
+					const box = element.getBoundingClientRect();
+					element.style.setProperty("--x", `${event.clientX - box.left}px`);
+					element.style.setProperty("--y", `${event.clientY - box.top}px`);
+				});
+			});
+
+			// Sem mouse, o elemento ganha cor quando passa pelo meio da tela.
+			if (window.matchMedia("(hover: none)").matches) {
+				const observer = new IntersectionObserver(
+					(entries) => {
+						entries.forEach((entry) => {
+							entry.target.classList.toggle("is-touched", entry.isIntersecting);
+						});
+					},
+					{ rootMargin: "-45% 0px -45% 0px" }
+				);
+				touchables.forEach((element) => observer.observe(element));
+			}
+
+			// Vídeos: baixam só perto da tela e pausam quando saem dela.
+			const startVideos = () => {
+				const videos = document.querySelectorAll<HTMLVideoElement>("video[data-src]");
+				const observer = new IntersectionObserver(
+					(entries) => {
+						entries.forEach((entry) => {
+							const video = entry.target as HTMLVideoElement;
+							if (entry.isIntersecting) {
+								if (!video.src) video.src = video.dataset.src ?? "";
+								video.play().catch(() => {});
+							} else {
+								video.pause();
+							}
+						});
+					},
+					{ rootMargin: "200px" }
+				);
+				videos.forEach((video) => observer.observe(video));
+			};
+
+			if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+				if (document.readyState === "complete") startVideos();
+				else window.addEventListener("load", startVideos, { once: true });
+			}
+		</script>
 	</body>
 </html>

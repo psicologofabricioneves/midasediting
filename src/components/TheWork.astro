@@ -1,0 +1,42 @@
+---
+import Chapter from "./Chapter.astro";
+import VideoCard from "./VideoCard.astro";
+import { longForm, shorts } from "../data/videos";
+
+const featured = longForm.filter((video) => video.featured);
+const featuredShorts = shorts.filter((video) => video.featured);
+
+// Grade assimétrica, como cortes de tamanhos diferentes em uma timeline
+const layout = [
+  "md:col-span-7",
+  "md:col-span-5 md:mt-28",
+  "md:col-span-5",
+  "md:col-span-7 md:-mt-20",
+];
+---
+
+<Chapter name="Work" id="work">
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10 md:mb-14">
+        <h2 class="display text-6xl md:text-[8vw]">Touch <span class="gold-word">anything.</span></h2>
+        <p class="max-w-xs text-lead md:text-right">Everything here starts as lead. Touch it to see it the way it was edited.</p>
+    </div>
+
+    <div class="grid md:grid-cols-12 gap-x-6 gap-y-10">
+        {featured.map((video, index) => (
+            <VideoCard
+                class={layout[index % layout.length]}
+                youtubeId={video.youtubeId}
+                title={video.title}
+                client={video.client}
+                sizes="(min-width: 768px) 55vw, 100vw"
+            />
+        ))}
+    </div>
+
+    <p class="eyebrow mt-20 mb-4">Short form</p>
+    <div class="flex md:grid md:grid-cols-5 gap-3 overflow-x-auto snap-x -mx-5 px-5 md:mx-0 md:px-0 md:overflow-visible">
+        {featuredShorts.map((video) => (
+            <VideoCard class="shrink-0 w-[58vw] sm:w-[38vw] md:w-auto snap-start" youtubeId={video.youtubeId} vertical />
+        ))}
+    </div>
+</Chapter>

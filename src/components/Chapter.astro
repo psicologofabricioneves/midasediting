@@ -1,0 +1,9 @@
+---
+// Capítulo da página: a minutagem é calculada pelo Timeline.astro
+const { name, id, class: className } = Astro.props;
+---
+
+<section id={id} data-chapter={name} class:list={["px-5 md:px-10 pt-24 md:pt-36 scroll-mt-4", className]}>
+    <p class="eyebrow mb-6 md:mb-8"><span class="tc text-gold">00:00</span> <span aria-hidden="true">/</span> {name}</p>
+    <slot />
+</section>

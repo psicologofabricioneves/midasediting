@@ -1,37 +1,30 @@
 ---
 // STAND-BY: página sem links no site e fora do Google.
 // Para ativar: remova "noindex" abaixo, tire o filtro do sitemap em astro.config.mjs
-// e adicione um link para /works (por exemplo, em Navigation.astro).
-
-// layout
+// e adicione um link para /works em Header.astro.
 import Layout from "../layouts/Layout.astro";
-
-// components
-import Container from "../components/elements/Container.astro";
-import Heading from "../components/elements/Heading.astro";
-import Work from "../components/elements/Work.astro";
-import Services from "../components/sections/home/Services.astro";
-
-// content
-import { longForm } from "../data/videos";
+import VideoCard from "../components/VideoCard.astro";
+import { longForm, shorts } from "../data/videos";
 ---
 
 <Layout
     title="Works"
     description="Long-form and short-form video editing work by Midas Editing."
+    timeline={false}
     noindex
 >
-    <Container variant={'lg'} class="items-center">
-        <Heading tagName="h1" tagSize="h2" class="text-center">Long Form</Heading>
-        <Container class="grid lg:grid-cols-2 grid-cols-1 gap-16">
+    <section class="px-5 md:px-10 pt-28 pb-16">
+        <h1 class="display text-6xl md:text-[8vw]">All the <span class="gold-word">work.</span></h1>
+        <div class="grid md:grid-cols-2 gap-x-6 gap-y-10 mt-12">
             {longForm.map((video) => (
-                <Work
-                    youtubeId={video.youtubeId}
-                    title={video.title}
-                    client={video.client}>
-                </Work>
+                <VideoCard youtubeId={video.youtubeId} title={video.title} client={video.client} sizes="(min-width: 768px) 50vw, 100vw" />
             ))}
-        </Container>
-    </Container>
-    <Services showAll />
+        </div>
+        <p class="eyebrow mt-16 mb-4">Short form</p>
+        <div class="grid grid-cols-2 md:grid-cols-5 gap-3">
+            {shorts.map((video) => (
+                <VideoCard youtubeId={video.youtubeId} vertical />
+            ))}
+        </div>
+    </section>
 </Layout>
