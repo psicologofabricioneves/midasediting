@@ -1,8 +1,4 @@
 ---
-// components
-import Container from "../../elements/Container.astro";
-import Heading from "../../elements/Heading.astro";
-
 // content
 import { shorts } from "../../../data/videos";
 
@@ -10,36 +6,39 @@ const { showAll = false } = Astro.props;
 const visibleShorts = showAll ? shorts : shorts.filter((video) => video.featured);
 ---
 
-<Container variant={"lg"} class="items-center">
-  <Heading tagName="h2" tagSize="h2" class="text-center">
-    SHORT FORM
-  </Heading>
+<section class="w-full m-auto xl:max-w-[85%] flex flex-col gap-8">
+  <h3 class="font-grunge uppercase text-base-900 text-64" style="line-height: 0.85">
+    Short form
+  </h3>
 
-  <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 w-full">
+  <div class="flex overflow-x-auto snap-x gap-3 -mx-8 px-8 md:mx-0 md:px-0 md:grid md:grid-cols-5 md:overflow-visible">
     {visibleShorts.map(({ youtubeId }) => {
       const thumbnail = `https://i.ytimg.com/vi/${youtubeId}/hqdefault.jpg`;
 
       return (
         <div
-          class="short-card relative aspect-[9/16] overflow-hidden cursor-pointer group"
+          class="short-card relative aspect-[9/16] overflow-hidden cursor-pointer group shrink-0 w-[58vw] sm:w-[40vw] md:w-auto snap-start"
           data-youtube-id={youtubeId}
         >
           <img
             src={thumbnail}
-            alt="Short video thumbnail"
+            alt=""
+            width="480"
+            height="360"
             loading="lazy"
+            decoding="async"
             class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
           />
 
           <button
             type="button"
-            class="short-play absolute inset-0 flex items-center justify-center cursor-pointer group/play outline-none focus:outline-none focus:ring-0"
-            aria-label="Play video"
+            class="short-play absolute inset-0 flex items-end justify-start p-2 cursor-pointer group/play outline-none focus-visible:ring-2 focus-visible:ring-white"
+            aria-label="Play short"
           >
-            <span class="flex items-center justify-center w-20 h-20 rounded-full bg-black/60 border-2 border-white backdrop-blur-sm transition-all duration-300 group-hover/play:scale-110 group-hover/play:bg-black/80">
+            <span class="flex items-center justify-center w-11 h-11 bg-black/75 border-2 border-white transition-all duration-300 group-hover/play:scale-110 group-hover/play:bg-black">
               <svg
                 viewBox="0 0 24 24"
-                class="w-9 h-9 fill-white translate-x-[2px]"
+                class="w-6 h-6 fill-white translate-x-[1px]"
                 aria-hidden="true"
               >
                 <path d="M8 5v14l11-7z" />
@@ -50,7 +49,7 @@ const visibleShorts = showAll ? shorts : shorts.filter((video) => video.featured
       );
     })}
   </div>
-</Container>
+</section>
 
 <div
   id="short-modal"

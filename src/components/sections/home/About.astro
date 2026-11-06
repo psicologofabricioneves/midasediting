@@ -1,54 +1,55 @@
 ---
 // components
 import Heading from "../../elements/Heading.astro";
-import Text from "../../elements/Text.astro";
-import Container from "../../elements/Container.astro";
+
+// assets
+import { Image } from "astro:assets";
+import photo from "../../../assets/images/Fotoeu.jpg";
 ---
 
-<Container variant={'xl'}>
+<section id="about" class="w-full m-auto xl:max-w-[85%] grid lg:grid-cols-2 gap-10 lg:gap-16 items-center scroll-mt-24">
 
-    <Heading tagName="h2" tagSize="h2" class="text-center">
-        ABOUT
-    </Heading>
+    <div class="flex flex-col gap-6">
+        <Heading tagName="h2" tagSize="h2">Psychology meets editing</Heading>
+        <p class="font-mono text-16/7 text-base-900">
+            I'm a psychologist and video editor with 4 years of experience, focused on creative YouTube content.
+            I bring what I know about attention, behavior and storytelling into the way I edit, shaping pacing,
+            retention and the overall viewer experience.
+        </p>
+        <p class="font-mono text-16/7 text-base-900">
+            Outside the timeline, you'll probably find me surfing.
+        </p>
+    </div>
 
-    <div class="flex lg:flex-row lg:gap-16 gap-10 flex-col">
-
-        <div class="flex flex-col items-start gap-6 lg:pt-6 text-base-900 lg:flex-1">
-
-            <Text variant={'xl'}>
-                PSYCHOLOGY MEETS EDITING
-            </Text>
-
-            <Text variant={'sm'}>
-                I'm a psychologist and video editor with 4 years of experience, focused on creative YouTube content.
-                I bring what I know about attention, behavior and storytelling into the way
-                I edit shaping pacing, retention and the overall viewer experience.
-            </Text>
-
-            <Text variant={'sm'}>
-                Outside the timeline, you'll probably find me surfing.
-            </Text>
-
+    <div class="grid grid-cols-[2fr_3fr] gap-3">
+        <div class="border-2 border-base-900 p-2">
+            <Image
+                src={photo}
+                alt="Midas in Brasília"
+                widths={[240, 480]}
+                sizes="(min-width: 1200px) 18vw, 38vw"
+                format="webp"
+                loading="lazy"
+                decoding="async"
+                class="w-full h-full object-cover grayscale-75"
+            />
         </div>
-
-      <div class="w-full lg:flex-1 flex justify-center lg:justify-end">
-    <div class="w-full max-w-[520px] aspect-[4/3] overflow-hidden border-2 border-base-900 p-3">
-        <video
-            id="about-video"
-            data-src="/videos/about.mp4"
-            poster="/videos/about-poster.webp"
-            muted
-            loop
-            playsinline
-            preload="none"
-            class="w-full h-full object-cover"
-        ></video>
-    </div>
-</div>
-
+        <div class="border-2 border-base-900 p-2">
+            <video
+                id="about-video"
+                data-src="/videos/about.mp4"
+                poster="/videos/about-poster.webp"
+                muted
+                loop
+                playsinline
+                preload="none"
+                aria-label="Surfer walking on the beach with a board"
+                class="w-full h-full object-cover"
+            ></video>
+        </div>
     </div>
 
-</Container>
+</section>
 
 <script>
   // Baixa o vídeo só quando ele está perto de aparecer e pausa fora da tela.

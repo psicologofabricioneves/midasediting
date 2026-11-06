@@ -1,50 +1,70 @@
 ---
 // components
-import Container from "../../elements/Container.astro"
-import Text from "../../elements/Text.astro"
-import Heading from "../../elements/Heading.astro"
-import ImageContainer from "../../elements/ImageContainer.astro"
-import Link from "../../elements/Link.astro"
-
-// assets
-import peter from "../../../assets/images/Fotoeu.jpg";
+import Link from "../../elements/Link.astro";
 ---
 
-<Container variant={"xl"} class="flex flex-col min-h-screen mb-8 md:-mb-48">
+<section class="w-full m-auto xl:max-w-[85%] grid lg:grid-cols-[1fr_1.15fr] gap-10 lg:gap-14 items-center">
 
-    <Container class="flex md:flex-row flex-col gap-8">
+    <div class="flex flex-col items-start gap-5">
+        <p class="font-mono font-semibold text-12 md:text-16 uppercase tracking-widest text-base-800">
+            YouTube editor + psychologist
+        </p>
 
-        <!-- LEFT SIDE -->
-       <Container class="md:flex-2 flex flex-col items-start md:-translate-y-58">
+        <h1 class="font-grunge uppercase text-base-900 tracking-tight text-[6.5rem] md:text-[8.5rem] xl:text-[9.5rem]" style="line-height: 0.76">
+            Videos<br />people<br />finish.
+        </h1>
 
-            <Heading tagName="h1" tagSize="h1">
-                Midas Editing
-            </Heading>
+        <p class="font-mono text-16/7 text-base-900 max-w-[34rem]">
+            I'm Midas, a psychologist with 4 years editing for YouTube. I use what I know about attention and behavior
+            to shape the story, the pacing and the retention of your long-form and short-form videos.
+        </p>
 
-            <div class="mt-6">
-                <Link variant={'button'} href="/contact">
-                    Work with me
-                </Link>
-            </div>
+        <div class="flex flex-wrap gap-3">
+            <Link variant="primary" href="#contact">Work with me</Link>
+            <Link variant="button" href="#work">See the work</Link>
+        </div>
+    </div>
 
-            <Text
-                variant={'xl'}
-                class="text-base-900 mt-16 lg:max-w-[520px] md:max-w-[480px] w-full"
-            >
-                Hi, I'm Midas, a video editor, short and long form for YouTube, working with storytelling, retention and pacing. It's a pleasure!
-            </Text>
+    <figure class="w-full order-first lg:order-none">
+        <div class="border-2 border-base-900 p-2 md:p-3 lg:-rotate-1">
+            <video
+                id="hero-reel"
+                data-src="/videos/reel.mp4"
+                poster="/videos/reel-poster.webp"
+                muted
+                loop
+                playsinline
+                preload="none"
+                aria-label="Fast montage of clips from videos edited by Midas"
+                class="w-full aspect-video object-cover bg-base-200"
+            ></video>
+        </div>
+        <figcaption class="mt-3 font-mono text-12 uppercase text-base-700 text-right">
+            Clips from real projects
+        </figcaption>
+    </figure>
 
-        </Container>
+</section>
 
-        <!-- RIGHT SIDE -->
-        <Container class="h-full md:h-[500px] flex-1 md:-translate-y-60">
-            <ImageContainer
-                src={peter}
-                alt="Midas Editing"
-                sizes="(min-width: 768px) 33vw, 100vw"
-            />
-        </Container>
+<script>
+  // Carrega a montagem depois da página pronta, para não atrasar a abertura.
+  const reel = document.getElementById("hero-reel");
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const saveData = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection?.saveData;
 
-    </Container>
+  if (reel instanceof HTMLVideoElement && !reduceMotion && !saveData) {
+    const start = () => {
+      new IntersectionObserver(([entry]) => {
+        if (entry.isIntersecting) {
+          if (!reel.src) reel.src = reel.dataset.src ?? "";
+          reel.play().catch(() => {});
+        } else {
+          reel.pause();
+        }
+      }).observe(reel);
+    };
 
-</Container>
+    if (document.readyState === "complete") start();
+    else window.addEventListener("load", start, { once: true });
+  }
+</script>

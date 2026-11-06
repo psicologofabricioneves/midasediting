@@ -1,0 +1,39 @@
+---
+// content
+import { contacts } from "../../../data/site";
+
+const { headingTag: HeadingTag = "h2" } = Astro.props;
+---
+
+<section id="contact" class="w-full m-auto xl:max-w-[85%] flex flex-col gap-10 scroll-mt-24">
+    <div class="flex flex-col gap-5 items-center text-center">
+        <HeadingTag class="font-grunge uppercase text-base-900 tracking-tight text-[5.5rem] md:text-[10rem] lg:text-216" style="line-height: 0.8">
+            Let's make<br />them stay.
+        </HeadingTag>
+        <p class="font-mono text-16/7 text-base-900 max-w-xl">
+            Tell me about your channel and the videos you're making. Reach out wherever is easiest for you.
+        </p>
+    </div>
+
+    <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+        {contacts.map((contact, index) => (
+            <li>
+                <a
+                    href={contact.href}
+                    target={contact.href.startsWith("http") ? "_blank" : undefined}
+                    rel={contact.href.startsWith("http") ? "noopener noreferrer" : undefined}
+                    class:list={[
+                        "group border-2 border-base-900 p-5 min-h-[130px] flex flex-col justify-between gap-6 transition-transform duration-300 hover:-translate-y-1",
+                        index === 0 ? "bg-base-900 text-base-100" : "text-base-900",
+                    ]}
+                >
+                    <span class="flex justify-between items-start font-grunge uppercase text-40" style="line-height: 0.9">
+                        {contact.title}
+                        <span aria-hidden="true" class="font-mono text-20">↗</span>
+                    </span>
+                    <span class="font-mono text-12 break-all">{contact.value}</span>
+                </a>
+            </li>
+        ))}
+    </ul>
+</section>

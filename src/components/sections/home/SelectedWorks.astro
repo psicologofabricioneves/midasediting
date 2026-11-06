@@ -1,6 +1,5 @@
 ---
 // components
-import Container from "../../elements/Container.astro";
 import Heading from "../../elements/Heading.astro";
 import Work from "../../elements/Work.astro";
 
@@ -9,18 +8,15 @@ import { longForm } from "../../../data/videos";
 const featuredWorks = longForm.filter((video) => video.featured);
 ---
 
-<Container variant={'lg'} class="items-center">
-    <Heading tagName="h2" tagSize="h2" class="text-center">
-        Featured Works
-    </Heading>
-    <Container class="grid lg:grid-cols-2 grid-cols-1 gap-16">
+<section id="work" class="w-full m-auto xl:max-w-[85%] flex flex-col gap-12 lg:gap-16 scroll-mt-24">
+    <Heading tagName="h2" tagSize="h2">The work</Heading>
+    <div class="grid md:grid-cols-2 gap-x-6 gap-y-12">
         {featuredWorks.map((video) => (
             <Work
                 youtubeId={video.youtubeId}
                 title={video.title}
                 client={video.client}>
             </Work>
-        ))
-        }
-    </Container>
-</Container>
+        ))}
+    </div>
+</section>

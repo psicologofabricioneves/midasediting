@@ -1,0 +1,29 @@
+---
+// components
+import Heading from "../../elements/Heading.astro";
+import Link from "../../elements/Link.astro";
+
+const steps = [
+    { title: "Send the footage", text: "Share your raw files and tell me what the video needs to do." },
+    { title: "I build the edit", text: "Story, pacing, captions and motion, all shaped around holding attention." },
+    { title: "Review and post", text: "You give notes, I refine the cut, and it's ready for your channel." },
+];
+---
+
+<section class="w-full m-auto xl:max-w-[85%] flex flex-col gap-12 lg:gap-16">
+    <Heading tagName="h2" tagSize="h2">How it works</Heading>
+
+    <ol class="grid md:grid-cols-3 gap-8">
+        {steps.map((step, index) => (
+            <li class="flex flex-col gap-3 border-t-2 border-base-900 pt-5">
+                <span class="font-grunge text-base-700 text-48" style="line-height: 0.9">{index + 1}</span>
+                <h3 class="font-grunge uppercase text-base-900 text-40" style="line-height: 0.9">{step.title}</h3>
+                <p class="font-mono text-16/7 text-base-900">{step.text}</p>
+            </li>
+        ))}
+    </ol>
+
+    <div>
+        <Link variant="primary" href="#contact">Start a project</Link>
+    </div>
+</section>

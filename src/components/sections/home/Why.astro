@@ -1,0 +1,29 @@
+---
+// components
+import Heading from "../../elements/Heading.astro";
+
+const reasons = [
+    { number: "01", title: "Attention", text: "The first seconds decide who stays. I build hooks around what actually makes people curious." },
+    { number: "02", title: "Behavior", text: "Viewers leave at predictable moments. I change the pace and set up the payoff before they get there." },
+    { number: "03", title: "Story", text: "Fast cuts alone don't hold anyone. Every scene has to make the viewer need the next one." },
+];
+---
+
+<section class="w-full m-auto xl:max-w-[85%] flex flex-col gap-12 lg:gap-16">
+    <div class="flex flex-col gap-4 max-w-3xl">
+        <Heading tagName="h2" tagSize="h2">Why they stay</Heading>
+        <p class="font-mono text-16/7 text-base-900">
+            Most editors learn retention from the graph. I studied why people pay attention in the first place, as a psychologist.
+        </p>
+    </div>
+
+    <ol class="grid md:grid-cols-3 gap-5">
+        {reasons.map((reason) => (
+            <li class="border-2 border-base-900 p-6 flex flex-col gap-4">
+                <span class="font-mono text-12 text-base-700">{reason.number}</span>
+                <h3 class="font-grunge uppercase text-base-900 text-64" style="line-height: 0.85">{reason.title}</h3>
+                <p class="font-mono text-16/7 text-base-900">{reason.text}</p>
+            </li>
+        ))}
+    </ol>
+</section>

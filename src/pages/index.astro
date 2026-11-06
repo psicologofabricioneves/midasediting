@@ -4,19 +4,29 @@ import Layout from '../layouts/Layout.astro';
 
 // components
 import Hero from '../components/sections/home/Hero.astro';
+import Proof from '../components/sections/home/Proof.astro';
+import Why from '../components/sections/home/Why.astro';
 import SelectedWorks from '../components/sections/home/SelectedWorks.astro';
 import Services from '../components/sections/home/Services.astro';
+import Process from '../components/sections/home/Process.astro';
 import About from '../components/sections/home/About.astro';
-import Faq from '../components/sections/home/Faq.astro';
+import Cta from '../components/sections/home/Cta.astro';
 ---
 
 <Layout
-    title="Midas Editing"
-    description="Video editor focused on YouTube long-form and short-form content."
+    title="YouTube Video Editor"
+    description="Midas is a psychologist and YouTube video editor. Long-form and short-form editing built around attention, pacing and retention."
 >
-    <Hero />
-    <SelectedWorks />
-    <Services />
-     <Faq />
+    <div class="flex flex-col gap-10">
+        <Hero />
+        <Proof />
+    </div>
+    <Why />
+    <div class="flex flex-col gap-16">
+        <SelectedWorks />
+        <Services />
+    </div>
+    <Process />
     <About />
+    <Cta />
 </Layout>
