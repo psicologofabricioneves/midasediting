@@ -1,22 +1,11 @@
 ---
 import Text from "../elements/Text.astro";
 
-const { slug, title, client } = Astro.props;
-
-const videos = {
-  "cloudsync-suite": "lgcm4pJA9Ms",
-  "lumina": "7ubNn84pf20",
-  "nourish-restaurant": "d-t9YbVNNHk",
-  "smart-speaker": "JcDLZtfOQJA",
-};
-
-const youtubeId = videos[slug];
+const { youtubeId, title, client } = Astro.props;
 
 const thumbBase = `https://i.ytimg.com/vi_webp/${youtubeId}`;
-const thumbnail = youtubeId ? `${thumbBase}/sddefault.webp` : "";
-const thumbnailSrcset = youtubeId
-  ? `${thumbBase}/mqdefault.webp 320w, ${thumbBase}/sddefault.webp 640w, ${thumbBase}/maxresdefault.webp 1280w`
-  : undefined;
+const thumbnail = `${thumbBase}/sddefault.webp`;
+const thumbnailSrcset = `${thumbBase}/mqdefault.webp 320w, ${thumbBase}/sddefault.webp 640w, ${thumbBase}/maxresdefault.webp 1280w`;
 ---
 
 <div

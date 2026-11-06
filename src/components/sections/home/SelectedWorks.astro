@@ -3,12 +3,10 @@
 import Container from "../../elements/Container.astro";
 import Heading from "../../elements/Heading.astro";
 import Work from "../../elements/Work.astro";
-import Link from "../../elements/Link.astro";
 
-// content collections
-import { getCollection } from "astro:content";
-const works = await getCollection("works");
-const featuredWorks = works.filter(work => work.data.isFeatured === true);
+// content
+import { longForm } from "../../../data/videos";
+const featuredWorks = longForm.filter((video) => video.featured);
 ---
 
 <Container variant={'lg'} class="items-center">
@@ -16,13 +14,11 @@ const featuredWorks = works.filter(work => work.data.isFeatured === true);
         Featured Works
     </Heading>
     <Container class="grid lg:grid-cols-2 grid-cols-1 gap-16">
-        {featuredWorks.map((work) => (
-            <Work 
-                slug={work.data.slug}
-                featuredImage={work.data.featuredImage}
-                title={work.data.title}
-                client={work.data.client}
-                category={work.data.category}>
+        {featuredWorks.map((video) => (
+            <Work
+                youtubeId={video.youtubeId}
+                title={video.title}
+                client={video.client}>
             </Work>
         ))
         }

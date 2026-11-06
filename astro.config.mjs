@@ -26,6 +26,7 @@ export default defineConfig({
     plugins: [tailwindcss()]
   },
 
-  integrations: [sitemap()],
+  // /works está em stand-by: sem links e fora do sitemap até ser ativada
+  integrations: [sitemap({ filter: (page) => !page.includes("/works") })],
   site: "https://midasediting.com"
 });

@@ -1,0 +1,37 @@
+---
+// STAND-BY: página sem links no site e fora do Google.
+// Para ativar: remova "noindex" abaixo, tire o filtro do sitemap em astro.config.mjs
+// e adicione um link para /works (por exemplo, em Navigation.astro).
+
+// layout
+import Layout from "../layouts/Layout.astro";
+
+// components
+import Container from "../components/elements/Container.astro";
+import Heading from "../components/elements/Heading.astro";
+import Work from "../components/elements/Work.astro";
+import Services from "../components/sections/home/Services.astro";
+
+// content
+import { longForm } from "../data/videos";
+---
+
+<Layout
+    title="Works"
+    description="Long-form and short-form video editing work by Midas Editing."
+    noindex
+>
+    <Container variant={'lg'} class="items-center">
+        <Heading tagName="h1" tagSize="h2" class="text-center">Long Form</Heading>
+        <Container class="grid lg:grid-cols-2 grid-cols-1 gap-16">
+            {longForm.map((video) => (
+                <Work
+                    youtubeId={video.youtubeId}
+                    title={video.title}
+                    client={video.client}>
+                </Work>
+            ))}
+        </Container>
+    </Container>
+    <Services showAll />
+</Layout>
