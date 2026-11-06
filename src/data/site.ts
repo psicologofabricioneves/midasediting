@@ -3,8 +3,6 @@ import ward from "../assets/clients/golden-roblox.jpg";
 import sirius from "../assets/clients/client-6.jpg";
 import golden from "../assets/clients/client-5.jpg";
 import muitoHumildee from "../assets/clients/client-2.jpg";
-import malcolm from "../assets/clients/client-3.jpg";
-import imaLoser from "../assets/clients/client-4.webp";
 
 export const contacts = [
   { title: "Email", value: "psique.fabricio@gmail.com", href: "mailto:psique.fabricio@gmail.com?subject=Video%20editing%20project" },
@@ -18,9 +16,4 @@ export const topClients = [
   { name: "Sirius Roblox", reach: "1.53M", unit: "subscribers", work: "Long-form", image: sirius, url: "https://www.youtube.com/@SiriusRobloxFunny" },
   { name: "@muitohumildee", reach: "1.51M", unit: "on Instagram", work: "Short-form", image: muitoHumildee, url: "https://www.instagram.com/muitohumildee/" },
   { name: "Golden Roblox", reach: "470K", unit: "subscribers", work: "Long-form", image: golden, url: "https://www.youtube.com/@GoldenRoblox0" },
-];
-
-export const otherClients = [
-  { name: "Malcolm Crawford", work: "Long-form + short-form", image: malcolm, url: "https://www.youtube.com/@malcolmcrawford_" },
-  { name: "IMALOSERONG", work: "Live content", image: imaLoser, url: "https://kick.com/imaloserong" },
 ];

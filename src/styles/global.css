@@ -5,13 +5,18 @@
     --color-soot: #1a1815;
     --color-lead: #a5a096;
     --color-bone: #f1ebdd;
-    --color-gold: #eeb422;
+    --color-gold: #c9a24b;
     --color-gold-soft: #dcc07a;
     --color-gold-deep: #a88a48;
 
     --font-display: var(--font-midas-display);
     --font-body: var(--font-midas-body);
     --font-mono: var(--font-midas-mono);
+}
+
+/* Ouro fosco com reflexo: luz na diagonal e sombra no lado oposto */
+:root {
+    --gold-metal: linear-gradient(125deg, #a67c2e 0%, #d9bb6c 26%, #ecd793 40%, #c9a24b 60%, #9d772d 80%, #d2b261 100%);
 }
 
 @property --touch-radius {
@@ -55,8 +60,36 @@ body {
     line-height: 0.95;
 }
 
+/* Mesmo tamanho em todos os títulos de seção */
+.title {
+    font-size: 14vw;
+    text-wrap: balance;
+}
+
+@media (min-width: 768px) {
+    .title {
+        font-size: 10vw;
+    }
+}
+
+@media (min-width: 1024px) {
+    .title {
+        font-size: 5.8vw;
+    }
+}
+
 .gold-word {
     color: var(--color-gold);
+    background: var(--gold-metal);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    /* Espaço para o gradiente alcançar as pernas do g e do y */
+    padding-bottom: 0.12em;
+}
+
+.gold-metal {
+    background: var(--gold-metal);
 }
 
 .eyebrow {
@@ -72,7 +105,7 @@ body {
     display: inline-block;
     padding: 0.9rem 1.5rem;
     font-weight: 600;
-    background: var(--color-gold);
+    background: var(--gold-metal);
     color: var(--color-ink);
     transition: background-color 0.2s, color 0.2s;
 }
@@ -182,10 +215,12 @@ body {
 
 #tc-fill {
     width: calc(var(--p) * 100%);
+    background: linear-gradient(to right, #a67c2e, #d9bb6c);
 }
 
 #tc-thumb {
     left: calc(var(--p) * 100%);
+    background: var(--gold-metal);
     transition: scale 0.12s;
 }
 
@@ -209,22 +244,34 @@ body {
     color: var(--color-gold);
 }
 
-/* Fim da página: folha de ouro fosca, sem o amarelo puro */
+/* Fim da página: folha de ouro fosca, com o mesmo reflexo diagonal */
 .gold-leaf {
     position: relative;
-    background:
-        radial-gradient(ellipse 70% 60% at 70% 100%, rgb(255 238 195 / 0.2), transparent),
-        linear-gradient(to bottom, var(--color-gold-deep), #c8aa66);
+    background: linear-gradient(to bottom, var(--color-gold-deep), #bd9d57);
 }
 
-.gold-leaf::before {
+.gold-leaf > * {
+    position: relative;
+    z-index: 1;
+}
+
+.gold-leaf::before,
+.gold-leaf::after {
     content: "";
     position: absolute;
     inset: 0;
+    pointer-events: none;
+    /* Some no topo para não marcar emenda com o degradê anterior */
+    mask-image: linear-gradient(to bottom, transparent, black 35%);
+}
+
+.gold-leaf::before {
+    background: linear-gradient(125deg, transparent 12%, rgb(255 236 180 / 0.34) 36%, transparent 58%, rgb(80 55 15 / 0.24) 80%, rgb(255 236 180 / 0.14) 100%);
+}
+
+.gold-leaf::after {
     background-image: url("../assets/ui/noise.webp");
     opacity: 0.06;
-    pointer-events: none;
-    mask-image: linear-gradient(to bottom, transparent, black 40%);
 }
 
 /* Curva de retenção desenhada conforme a rolagem */
@@ -233,7 +280,7 @@ body {
     stroke-dashoffset: calc(1 - var(--draw, 0));
 }
 
-/* No celular os rótulos ficariam ilegíveis; a lista abaixo explica cada ponto */
+/* No celular os rótulos ficariam ilegíveis; a legenda abaixo do gráfico os substitui */
 @media (max-width: 767px) {
     .curve-labels text {
         display: none;

@@ -1,13 +1,13 @@
 ---
 import { Image } from "astro:assets";
 import Chapter from "./Chapter.astro";
-import { topClients, otherClients } from "../data/site";
+import { topClients } from "../data/site";
 ---
 
 <Chapter name="Proof" class="-mt-8 md:-mt-16">
     <div class="grid lg:grid-cols-12 gap-10">
         <div class="lg:col-span-5">
-            <p class="display text-gold text-[30vw] lg:text-[13vw]" style="line-height: 0.85">5.5M</p>
+            <p class="display gold-word w-fit text-[30vw] lg:text-[13vw]" style="line-height: 0.85">5.5M</p>
             <p class="text-lg md:text-xl leading-snug max-w-sm mt-5">
                 people follow the creators who already trust me with their footage.
             </p>
@@ -23,14 +23,6 @@ import { topClients, otherClients } from "../data/site";
                             <span class="block font-mono text-sm md:text-lg">{client.reach}</span>
                             <span class="block eyebrow">{client.unit}</span>
                         </span>
-                    </a>
-                </li>
-            ))}
-            {otherClients.map((client) => (
-                <li class="client-row border-b border-lead/40">
-                    <a href={client.url} target="_blank" rel="noopener noreferrer" class="flex items-center justify-between gap-4 py-3 hover:text-gold transition-colors">
-                        <span class="text-sm md:text-base">{client.name}</span>
-                        <span class="eyebrow text-right">{client.work}</span>
                     </a>
                 </li>
             ))}

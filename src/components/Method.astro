@@ -1,40 +1,31 @@
 ---
 import Chapter from "./Chapter.astro";
 
-const tools = [
-    { name: "Curiosity gap", text: "The mind wants to close what's open. The first seconds raise a question the viewer needs answered." },
-    { name: "Pattern interrupt", text: "Attention drops when things get predictable. A change comes right before the brain checks out." },
-    { name: "Open loops", text: "Every payoff sets up the next one, so there's never a good moment to leave." },
-];
+const points = ["Curiosity gap", "Pattern interrupt", "Open loop"];
 ---
 
 <Chapter name="Method" id="method">
-    <h2 class="display text-6xl md:text-[8vw] max-w-5xl">Other editors read the graph. I read the viewer.</h2>
+    <h2 class="display title max-w-5xl">Other editors read the graph.<br class="hidden lg:block" /> I read the viewer.</h2>
 
     <figure class="mt-12 md:mt-16">
         <svg id="curve" viewBox="0 0 1200 360" class="w-full h-auto" role="img" aria-label="Illustrative retention curve: a typical video drops quickly, while a video edited for attention stays higher">
             <line x1="0" y1="359" x2="1200" y2="359" stroke="#a5a096" stroke-opacity="0.4" />
             <path pathLength="1" class="curve-line" fill="none" stroke="#a5a096" stroke-width="2" stroke-dasharray="1" d="M0,20 C60,190 150,240 300,270 C600,315 900,330 1200,342" />
-            <path pathLength="1" class="curve-line" fill="none" stroke="#eeb422" stroke-width="4" d="M0,20 C50,70 110,95 200,105 C330,118 390,110 480,135 C620,172 700,160 800,172 C950,190 1060,195 1200,205" />
-            <g class="curve-labels" fill="#eeb422" font-family="monospace" font-size="17">
+            <path pathLength="1" class="curve-line" fill="none" stroke="#c9a24b" stroke-width="4" d="M0,20 C50,70 110,95 200,105 C330,118 390,110 480,135 C620,172 700,160 800,172 C950,190 1060,195 1200,205" />
+            <g class="curve-labels" fill="#c9a24b" font-family="monospace" font-size="17">
                 <circle cx="110" cy="85" r="7" /><text x="128" y="72">Curiosity gap</text>
                 <circle cx="480" cy="135" r="7" /><text x="480" y="108">Pattern interrupt</text>
                 <circle cx="800" cy="172" r="7" /><text x="800" y="146">Open loop</text>
             </g>
             <g class="curve-labels" font-family="monospace" font-size="17">
-                <text x="1195" y="232" text-anchor="end" fill="#eeb422">Edited for attention</text>
+                <text x="1195" y="232" text-anchor="end" fill="#c9a24b">Edited for attention</text>
                 <text x="1195" y="328" text-anchor="end" fill="#a5a096">Typical edit</text>
             </g>
         </svg>
-        <figcaption class="eyebrow mt-3">Gold: edited for attention. Grey: typical edit. An illustration of the idea, not client data.</figcaption>
+        {/* No celular os rótulos do gráfico ficariam ilegíveis, então viram uma legenda */}
+        <figcaption class="md:hidden eyebrow mt-4 flex flex-col gap-2">
+            <span class="text-gold flex flex-wrap gap-x-4 gap-y-2">{points.map((point) => <span class="whitespace-nowrap">{point}</span>)}</span>
+            <span><span class="text-gold">Edited for attention</span> / Typical edit</span>
+        </figcaption>
     </figure>
-
-    <ol class="grid md:grid-cols-3 gap-8 mt-12">
-        {tools.map((tool) => (
-            <li class="border-t border-gold pt-4">
-                <h3 class="display text-3xl md:text-4xl">{tool.name}</h3>
-                <p class="mt-3 text-lead leading-relaxed">{tool.text}</p>
-            </li>
-        ))}
-    </ol>
 </Chapter>
