@@ -55,7 +55,6 @@ body {
 
 .gold-word {
     color: var(--color-gold);
-    font-style: italic;
 }
 
 .eyebrow {
@@ -142,14 +141,55 @@ body {
     box-shadow: inset 0 0 0 2px var(--color-gold);
 }
 
-/* Imagem e vídeo banhados em ouro */
-.gild {
-    filter: grayscale(1) sepia(1) saturate(2.3) hue-rotate(-22deg) brightness(0.78) contrast(1.12);
-    transition: filter 0.6s;
+/* Clientes: mesmo toque das capas, com o mouse ou no meio da tela do celular */
+.client-row img {
+    filter: grayscale(1);
+    transition: filter 0.4s;
 }
 
-.gild:hover {
+.client-row a {
+    transition: color 0.3s;
+}
+
+.client-row a:hover,
+.client-row.is-touched a {
+    color: var(--color-gold);
+}
+
+.client-row a:hover img,
+.client-row.is-touched img {
     filter: none;
+}
+
+/* Barra de progresso no estilo do YouTube */
+#tc-track {
+    --p: 0;
+    touch-action: none;
+    cursor: pointer;
+}
+
+#tc-bar {
+    height: 3px;
+    transition: height 0.12s;
+}
+
+#tc-track:hover #tc-bar,
+#tc-track.is-dragging #tc-bar {
+    height: 5px;
+}
+
+#tc-fill {
+    width: calc(var(--p) * 100%);
+}
+
+#tc-thumb {
+    left: calc(var(--p) * 100%);
+    transition: scale 0.12s;
+}
+
+#tc-track:hover #tc-thumb,
+#tc-track.is-dragging #tc-thumb {
+    scale: 1.25;
 }
 
 /* Reservado para material que o Midas ainda vai enviar */
@@ -165,13 +205,6 @@ body {
     letter-spacing: 0.08em;
     text-transform: uppercase;
     color: var(--color-gold);
-}
-
-.todo-inline {
-    font-family: var(--font-mono);
-    font-size: 0.8em;
-    color: var(--color-gold);
-    border-bottom: 1px dashed var(--color-gold);
 }
 
 /* Faixa de clientes */
@@ -220,7 +253,7 @@ dialog.player::backdrop {
     }
 
     .touch-color,
-    .gild {
+    .client-row img {
         transition: none;
     }
 

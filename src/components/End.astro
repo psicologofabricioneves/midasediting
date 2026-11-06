@@ -2,7 +2,6 @@
 import { contacts } from "../data/site";
 
 const { headingTag: HeadingTag = "h2" } = Astro.props;
-const [primary, ...others] = contacts;
 ---
 
 <div class="h-40 md:h-64 mt-20" style="background: linear-gradient(to bottom, transparent, var(--color-gold))" aria-hidden="true"></div>
@@ -15,25 +14,24 @@ const [primary, ...others] = contacts;
     </HeadingTag>
 
     <p class="text-xl md:text-3xl leading-snug max-w-3xl mt-8">
-        Most sites lose people in seconds. You stayed to the end. That's what I do for your viewers. Tell me about your channel.
+        Most sites lose people in seconds. You stayed to the end. That's what I do for your viewers. Long-form or short-form, tell me about your channel.
     </p>
 
-    <div class="mt-10 flex flex-col lg:flex-row gap-8 lg:items-end justify-between">
-        <a href={primary.href} class="inline-block bg-ink text-gold hover:bg-bone hover:text-ink transition-colors px-6 py-5 md:px-8 md:py-6 self-start">
-            <span class="display text-4xl md:text-6xl block">Email me</span>
-            <span class="font-mono text-xs break-all mt-1 block">{primary.value}</span>
-        </a>
-
-        <ul class="flex flex-wrap gap-x-8 gap-y-3 text-lg md:text-xl font-semibold">
-            {others.map((contact) => (
-                <li>
-                    <a href={contact.href} target="_blank" rel="noopener noreferrer" class="underline underline-offset-4 decoration-2 hover:no-underline">
-                        {contact.title} <span class="font-mono text-xs font-normal">{contact.value}</span>
-                    </a>
-                </li>
-            ))}
-        </ul>
-    </div>
+    <ul class="mt-10 grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
+        {contacts.map((contact) => (
+            <li>
+                <a
+                    href={contact.href}
+                    target={contact.href.startsWith("mailto:") ? undefined : "_blank"}
+                    rel={contact.href.startsWith("mailto:") ? undefined : "noopener noreferrer"}
+                    class="h-full block bg-ink text-gold hover:bg-bone hover:text-ink transition-colors px-5 py-5 md:px-6 md:py-6"
+                >
+                    <span class="display text-4xl md:text-5xl block">{contact.title}</span>
+                    <span class="font-mono text-xs break-all mt-2 block">{contact.value}</span>
+                </a>
+            </li>
+        ))}
+    </ul>
 
     <p class="font-mono text-xs mt-16">Midas Editing © 2026 All Rights Reserved</p>
 </section>

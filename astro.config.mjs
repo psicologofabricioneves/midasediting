@@ -14,7 +14,7 @@ export default defineConfig({
       cssVariable: "--font-midas-display",
       fallbacks: ["Georgia", "serif"],
       weights: [400],
-      styles: ["normal", "italic"],
+      styles: ["normal"],
     },
     {
       provider: fontProviders.fontsource(),

@@ -15,9 +15,9 @@ import { topClients, otherClients } from "../data/site";
 
         <ul class="lg:col-span-7 border-t border-lead/40">
             {topClients.map((client) => (
-                <li class="border-b border-lead/40">
+                <li class="client-row border-b border-lead/40">
                     <a href={client.url} target="_blank" rel="noopener noreferrer" class="group flex items-center gap-4 py-4 md:py-5 hover:text-gold transition-colors">
-                        <Image src={client.image} alt="" width={112} height={112} fit="cover" format="webp" loading="lazy" decoding="async" class="w-11 h-11 md:w-14 md:h-14 shrink-0 rounded-full object-cover grayscale group-hover:grayscale-0 transition-[filter]" />
+                        <Image src={client.image} alt="" width={112} height={112} fit="cover" format="webp" loading="lazy" decoding="async" class="w-11 h-11 md:w-14 md:h-14 shrink-0 rounded-full object-cover" />
                         <span class="display text-xl md:text-4xl min-w-0 break-words flex-1">{client.name}</span>
                         <span class="text-right shrink-0">
                             <span class="block font-mono text-sm md:text-lg">{client.reach}</span>
@@ -27,7 +27,7 @@ import { topClients, otherClients } from "../data/site";
                 </li>
             ))}
             {otherClients.map((client) => (
-                <li class="border-b border-lead/40">
+                <li class="client-row border-b border-lead/40">
                     <a href={client.url} target="_blank" rel="noopener noreferrer" class="flex items-center justify-between gap-4 py-3 hover:text-gold transition-colors">
                         <span class="text-sm md:text-base">{client.name}</span>
                         <span class="eyebrow text-right">{client.work}</span>

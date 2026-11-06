@@ -70,15 +70,21 @@ const {
 
 			// Sem mouse, o elemento ganha cor quando passa pelo meio da tela.
 			if (window.matchMedia("(hover: none)").matches) {
-				const observer = new IntersectionObserver(
-					(entries) => {
-						entries.forEach((entry) => {
-							entry.target.classList.toggle("is-touched", entry.isIntersecting);
-						});
-					},
-					{ rootMargin: "-45% 0px -45% 0px" }
-				);
-				touchables.forEach((element) => observer.observe(element));
+				const touchInBand = (selector: string, rootMargin: string) => {
+					const observer = new IntersectionObserver(
+						(entries) => {
+							entries.forEach((entry) => {
+								entry.target.classList.toggle("is-touched", entry.isIntersecting);
+							});
+						},
+						{ rootMargin }
+					);
+					document.querySelectorAll(selector).forEach((element) => observer.observe(element));
+				};
+
+				touchInBand(".touch", "-45% 0px -45% 0px");
+				// Linhas de clientes são baixas: a faixa é mais fina para acender uma por vez.
+				touchInBand(".client-row", "-50% 0px -50% 0px");
 			}
 
 			// Vídeos: baixam só perto da tela e pausam quando saem dela.

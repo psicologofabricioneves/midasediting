@@ -14,7 +14,7 @@ import { longForm, shorts } from "../data/videos";
     noindex
 >
     <section class="px-5 md:px-10 pt-28 pb-16">
-        <h1 class="display text-6xl md:text-[8vw]">All the <span class="gold-word">work.</span></h1>
+        <h1 class="display text-6xl md:text-[8vw]">All the work.</h1>
         <div class="grid md:grid-cols-2 gap-x-6 gap-y-10 mt-12">
             {longForm.map((video) => (
                 <VideoCard youtubeId={video.youtubeId} title={video.title} client={video.client} sizes="(min-width: 768px) 50vw, 100vw" />

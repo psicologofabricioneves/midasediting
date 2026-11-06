@@ -1,7 +1,11 @@
 <div id="timeline" class="fixed bottom-0 inset-x-0 z-40 h-12 bg-ink border-t border-soot flex items-center gap-4 px-5 md:px-10 font-mono text-xs" role="presentation">
     <span class="text-bone shrink-0 tabular-nums"><span id="tc-now">00:00</span><span class="text-lead"> / 02:30</span></span>
-    <div id="tc-track" class="relative flex-1 h-1.5 bg-soot">
-        <div id="tc-fill" class="absolute inset-y-0 left-0 w-full bg-gold origin-left" style="transform: scaleX(0)"></div>
+    <div id="tc-track" class="relative flex-1 h-full flex items-center">
+        <div id="tc-bar" class="relative w-full bg-bone/25">
+            <div id="tc-fill" class="absolute inset-y-0 left-0 bg-gold"></div>
+            <div id="tc-ticks" class="absolute inset-0"></div>
+        </div>
+        <span id="tc-thumb" class="absolute top-1/2 w-3.5 h-3.5 rounded-full bg-gold -translate-x-1/2 -translate-y-1/2 pointer-events-none" aria-hidden="true"></span>
     </div>
     <span id="tc-chapter" class="text-gold shrink-0 uppercase w-16 sm:w-24 text-right">Hook</span>
 </div>
@@ -10,9 +14,9 @@
   const DURATION = 150; // 02:30: a página inteira é tratada como um vídeo
 
   const now = document.getElementById("tc-now");
-  const fill = document.getElementById("tc-fill");
   const chapterLabel = document.getElementById("tc-chapter");
   const track = document.getElementById("tc-track");
+  const ticks = document.getElementById("tc-ticks");
   const chapters = [...document.querySelectorAll<HTMLElement>("[data-chapter]")];
   const curve = document.getElementById("curve");
 
@@ -26,7 +30,7 @@
 
   // Minutagem de cada capítulo e marcas na barra
   const placeChapters = () => {
-    track?.querySelectorAll(".tick").forEach((tick) => tick.remove());
+    ticks?.replaceChildren();
     chapters.forEach((chapter) => {
       const top = chapter.getBoundingClientRect().top + scrollY;
       const position = Math.min(top / maxScroll(), 1);
@@ -36,7 +40,7 @@
         const tick = document.createElement("span");
         tick.className = "tick absolute inset-y-0 w-0.5 bg-ink";
         tick.style.left = `${position * 100}%`;
-        track?.append(tick);
+        ticks?.append(tick);
       }
     });
   };
@@ -48,7 +52,7 @@
 
     document.documentElement.style.setProperty("--scroll", progress.toFixed(3));
     if (now) now.textContent = format(progress * DURATION);
-    if (fill) fill.style.transform = `scaleX(${progress})`;
+    track?.style.setProperty("--p", progress.toFixed(4));
 
     const current = chapters.filter((chapter) => chapter.getBoundingClientRect().top < innerHeight * 0.5).pop();
     if (current && chapterLabel) chapterLabel.textContent = current.dataset.chapter ?? "";
@@ -66,6 +70,25 @@
       requestAnimationFrame(update);
     }
   };
+
+  // Clicar ou arrastar na barra leva àquele ponto da página, como no YouTube
+  const seek = (event: PointerEvent) => {
+    if (!track) return;
+    const box = track.getBoundingClientRect();
+    const position = Math.min(Math.max((event.clientX - box.left) / box.width, 0), 1);
+    scrollTo({ top: position * maxScroll(), behavior: "instant" });
+  };
+
+  track?.addEventListener("pointerdown", (event) => {
+    track.setPointerCapture(event.pointerId);
+    track.classList.add("is-dragging");
+    seek(event);
+  });
+  track?.addEventListener("pointermove", (event) => {
+    if (track.hasPointerCapture(event.pointerId)) seek(event);
+  });
+  track?.addEventListener("pointerup", () => track.classList.remove("is-dragging"));
+  track?.addEventListener("pointercancel", () => track.classList.remove("is-dragging"));
 
   addEventListener("scroll", queue, { passive: true });
   addEventListener("resize", () => {
